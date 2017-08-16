@@ -73,6 +73,8 @@ if __name__ == '__main__':
     ax.plot(r,LJdoubleWell(r,[1.8,1.1,np.sqrt(0.02)]))
     ax.plot(r,LJdoubleWell(r,[1.8,1.9,np.sqrt(0.02)]))
 
+    ax.set_ylabel('V(r)')
+    ax.set_xlabel('r')
     ax.set_ylim([-3,2])
     
     fig.savefig('LJplot.png')
