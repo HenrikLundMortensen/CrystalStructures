@@ -1,5 +1,7 @@
 import numpy as np
 import crystalStructures.featureVector as fv
+import crystalStructures.coordinateGenerator as cg
+import crystalStructures.energyCalculations.energyLennardJones as elj
 
 
 class CoordinateSet:
@@ -10,13 +12,13 @@ class CoordinateSet:
 
     Coordinates: set of coordinates for all atoms in the strucuture.
                  First element is the x coordinate, second is the y
-                 coordinate and third is the atom number. 
+                 coordinate and third is the atom number.
 
     FeatureVectorCalculator: instance of the FeatureVector class
 
     EnergyCalculator: instance of the EnergyCalculator class
 
-    #### Methods #### 
+    #### Methods ####
     
     createRandomSet: creates a random set of coordinates of a given size
 
@@ -40,19 +42,25 @@ class CoordinateSet:
             self.Coordinates[coordinate] = np.random.rand(3)
             self.Coordinates[coordinate][2] = 1
 
-    def calculateEnergy(self, energyCalculator):
-        self.Energy = energyCalculator(self.Coordinates)
+    def calculateEnergy(self, energyCalculator, params):
+        self.Energy = energyCalculator(self.Coordinates, params)
 
     def calculateFeatures(self):
         self.FeatureVectors = self.FeatureVectorCalculator.calculateFeatureVectorsGaussian(self.Coordinates)
 
             
 if __name__ == '__main__':
-    size = 4
+    size = 2
     myCoordinateSet = CoordinateSet()
     myCoordinateSet.createRandomSet(size)
     print('Coordinates are:', myCoordinateSet.Coordinates)
     myCoordinateSet.calculateFeatures()
     print('Feature vectors are:', myCoordinateSet.FeatureVectors)
+
+    # Calculate energy
+    epsilon, r0, sigma = 1.8, 1.1, np.sqrt(0.02)
+    params = [epsilon, r0, sigma]
+    energyCalculator = elj.totalEnergyLJdoubleWell
+    myCoordinateSet.calculateEnergy(energyCalculator, params)
     
    
