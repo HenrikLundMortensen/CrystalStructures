@@ -4,31 +4,6 @@ import matplotlib.pyplot as plt
 from scipy.optimize import basinhopping
 
 
-class coordinateGenerator:
-    """
-    Natoms: number of atoms in the coordinate set.
-    dim: The dimention of the spece the atoms are positioned in (dim = 2 for 2D ect.)
-    atomContent (not added yet): Array to specify the distribution of each atom type.
-    """
-    
-    def __init__(self, Natoms, dim):
-        self.Natoms = Natoms
-        self.dim = dim
-        
-    def genCoordinateSet(self):
-        coorSet = []
-        for i in range(self.Natoms):
-            newAtom = np.r_[np.random.rand(self.dim), 0]
-            coorSet.append(newAtom)
-        return coorSet
-    
-    def genDataSet(self, Ndata):
-        dataSet = []
-        for i in range(Ndata):
-            dataSet.append(self.genCoordinateSet())
-        return dataSet
-
-
 class globalMinimizer:
 
     def __init__(self, coorSet, Efunc, params):
@@ -73,22 +48,3 @@ print(res.x)
 plt.plot(x[:, 0], x[:, 1], 'o', color='red')
 plt.plot(xres[:, 0], xres[:, 1], 'o', color='blue')
 plt.show()
-
-"""
-N = 100
-
-eps = 0.1
-r0 = 0.5
-sigma = 0.1
-
-r = np.linspace(0, 3, N)
-x = np.c_[r, np.zeros(N)]
-
-E_array = np.zeros(N)
-for i in range(1, N):
-    E_array[i] += Ecalculator(x[(0, i), :], eps, r0, sigma)
-
-plt.plot(r, E_array)
-plt.ylim((-2, 1))
-plt.show()
-"""
