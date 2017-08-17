@@ -59,10 +59,10 @@ class FeatureVectorCalculator:
 
         xi, lamb, eta = 2, 1, 1    # Guess some parameters for angular part
         f2 = 0                     # Calculate angular part
-        for j in range(dataSize):  # Counts all triples twice, not sure if intended
+        for j in range(dataSize):
             if j == i:
                 continue
-            for k in range(dataSize):
+            for k in range(j, dataSize):
                 if k == j or k == i:
                     continue
                 # Calculate the distances between atoms
@@ -74,6 +74,7 @@ class FeatureVectorCalculator:
 
                 RjkVec = coordinateSet[k][:2] - coordinateSet[j][:2]
                 Rjk = np.linalg.norm(RjkVec)
+
                 f2 += (1 + lamb * np.cos(np.dot(RijVec, RikVec) / (Rij * Rik)))**xi * np.exp(- (Rij * Rij + Rik * Rik + Rjk * Rjk) /
                                                                                              self.Rc**2) * self.cutOffFunction(Rij) * self.cutOffFunction(Rik) * self.cutOffFunction(Rjk)
         f2 *= 2**(1 - xi)
