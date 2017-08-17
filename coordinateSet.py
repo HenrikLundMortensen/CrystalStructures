@@ -1,6 +1,5 @@
 import numpy as np
-import CrystalStructures.featureVector as fv
-import scipy
+import crystalStructures.featureVector as fv
 
 
 class CoordinateSet:
@@ -45,11 +44,11 @@ class CoordinateSet:
         self.Energy = energyCalculator(self.Coordinates)
 
     def calculateFeatures(self):
-        self.FeatureVectors = self.FeatureVectorCalculator.calculateFeatureVectorsSimple(self.Coordinates)
+        self.FeatureVectors = self.FeatureVectorCalculator.calculateFeatureVectorsGaussian(self.Coordinates)
 
             
 if __name__ == '__main__':
-    size = 12
+    size = 4
     myCoordinateSet = CoordinateSet()
     myCoordinateSet.createRandomSet(size)
     print('Coordinates are:', myCoordinateSet.Coordinates)
