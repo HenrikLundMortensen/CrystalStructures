@@ -1,6 +1,5 @@
 import numpy as np
 import crystalStructures.featureVector as fv
-import crystalStructures.coordinateGenerator as cg
 import crystalStructures.energyCalculations.energyLennardJones as elj
 
 
@@ -62,5 +61,6 @@ if __name__ == '__main__':
     params = [epsilon, r0, sigma]
     energyCalculator = elj.totalEnergyLJdoubleWell
     myCoordinateSet.calculateEnergy(energyCalculator, params)
+
     
    
