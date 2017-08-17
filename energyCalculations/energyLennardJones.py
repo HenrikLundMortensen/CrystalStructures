@@ -28,12 +28,12 @@ def LJdoubleWell(r,params):
     return 1/(r**12) - 2/(r**6) - epsilon*np.exp( -  ((r - r0)**2)/(2*sigma**2))
 
 
-def totalEnergyLJdoubleWell(cs,params):
+def totalEnergyLJdoubleWell(coords,params):
     """
     Calculates the total double well Lennard Jones potential energy of the atom ensemble defined by the given coordinate set.
 
     Input:
-    cs: Coordinate set class instance
+    coords: Coordinates of atoms
     params: Parameters for the potential, [epsilon, r0, sigma] 
 
     Output:
@@ -43,18 +43,11 @@ def totalEnergyLJdoubleWell(cs,params):
 
     E = 0
 
-    # Test
-    coordinates = [ np.array([3,2,0]) , np.array([2.2,0.8,1]), np.array([1.4,2.3,1]) ,np.array([3,4,1]) ]
-    
-    coords = coordinates
-
     # Calculate energy pair wise.  
     for i in range(len(coords)):
         for j in range(i+1,len(coords)): # Does not calculate for the same pairs twice.
             r = dist(coords[i],coords[j])
             E += LJdoubleWell(r,params)
-            print(r)
-            
     return E
 
 
@@ -78,13 +71,3 @@ if __name__ == '__main__':
     ax.set_ylim([-3,2])
     
     fig.savefig('LJplot.png')
-
-    
-
-    
-    
-
-
-
-
-
