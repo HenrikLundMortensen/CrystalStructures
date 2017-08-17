@@ -36,10 +36,10 @@ class plotSurfaceFig:
 
         # Set background color and x and y limits
         ax.set_facecolor((0.9,0.9,1))
-        ax.set_xlim([0-0.2,1.2])
-        ax.set_ylim([-0.2,1.2])
-        ax.set_xticks([])
-        ax.set_yticks([])
+        # ax.set_xlim([0-0.2,1.2])
+        # ax.set_ylim([-0.2,1.2])
+        # ax.set_xticks([])
+        # ax.set_yticks([])
 
         # Create patches.Circle instances
         p = []
@@ -56,25 +56,35 @@ class plotSurfaceFig:
         Input:
         cs: Coordinate set class instance
         """
-        # coordinates = cs.coordinates
-        coordinates = cs
+        # Coordinates = cs.Coordinates
+        Coordinates = cs
         
         # Number of atom species
-        Na_species = len(set(list(coord[2] for coord in coordinates)))
+        Na_species = len(set(list(coord[2] for coord in Coordinates)))
 
-        radius = 0.05
+
         colorlist = ['red','blue','black','magenta']
 
-        npcoordinates = np.array(coordinates)
-        xmax = max(np.transpose(npcoordinates)[0])
-        ymax = max(np.transpose(npcoordinates)[1])                         
+        npCoordinates = np.array(Coordinates)
+
+        xmax = max(np.transpose(npCoordinates)[0])
+        xmin = min(np.transpose(npCoordinates)[0])
+        ymax = max(np.transpose(npCoordinates)[1])
+        ymin = min(np.transpose(npCoordinates)[1])
+
+
+        self.masterAx.set_xlim([xmin-abs(xmin)*0.2,xmax+abs(xmax)*0.2])
+        self.masterAx.set_ylim([ymin-abs(ymin)*0.2,ymax+abs(ymax)*0.2])
+        
+        radius = 0.05
                          
         i = 0
-        for coords in coordinates:
+        for coords in Coordinates:
 
             p = self.patches[i]
-            p.center = (coords[0]/xmax,coords[1]/ymax)
+            p.center = (coords[0],coords[1])
             p.radius = radius
+            p.set_alpha(0.4)
 
             p.set_color(colorlist[int(coords[2])])
             i += 1
@@ -86,21 +96,21 @@ if __name__ == '__main__':
     
     Na = 20
 
-    coordinates = np.random.rand(Na,2)
+    Coordinates = np.random.rand(Na,2)
     species = np.random.randint(0,2,size = (Na,1))
 
-    coordinates = np.append(coordinates,species,axis=1)
+    Coordinates = np.append(Coordinates,species,axis=1)
 
 
     surfFig = plotSurfaceFig()
     surfFig.initializeSurfacePlot(Na)
 
     for i in range(100):
-        coordinates = np.random.rand(Na,2)
+        Coordinates = np.random.rand(Na,2)
         species = np.random.randint(0,2,size = (Na,1))
-        coordinates = np.append(coordinates,species,axis=1)
+        Coordinates = np.append(Coordinates,species,axis=1)
         
-        surfFig.plotSurface(coordinates)
+        surfFig.plotSurface(Coordinates)
         plt.pause(0.001)
 
     surfFig.fig.show()
