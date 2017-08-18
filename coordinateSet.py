@@ -23,7 +23,7 @@ class CoordinateSet:
 
     calculateEnergy: calculates the energy of the surface, given a specific energy calculator
 
-    calculateFeatures: calculates the feature vectors for a GRID/ONE ATOM????
+    calculateFeatures: calculates the feature vectors for a grid
     """
 
     def __init__(self):
