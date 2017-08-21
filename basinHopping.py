@@ -5,7 +5,7 @@ from plotSurface import *
 from coordinateSet import *
 from matplotlib import pyplot as plt
 import time
-
+import pickle
 
 
 class Boundaries():
@@ -61,6 +61,84 @@ class Boundaries():
         return c
 
 
+
+class TakeStep(object):
+    """
+    This defines how to take steps in the basin hopping algorithm. The step is taken by
+    adding a random number to each coordinate. The random number is chosen in the interval [-stepsize,stepsize].
+    If the coordinate is outside the bounding box defined by the Boundaries class instance, a new random number is 
+    calculated.
+    """
+    
+
+    def __init__(self,stepsize,Bounds):
+        """
+        """
+        self.stepsize = stepsize
+        self.Bounds = Bounds
+        
+    def __call__(self,x):
+        """
+        When the class instance is called, a new set of coordinates are generated and returned.
+        
+        Input:
+        x: coordinate list , [x1,y1,x2,y2,x3,y3,...]
+
+        output:
+        x: Perturbed coordinate list , [x1,y1,x2,y2,x3,y3,...]
+        """
+
+        s = self.stepsize
+        b = self.Bounds
+
+        # Check if x is within the boundary box
+        i = 0
+        while i < len(x):
+            # if i is even, then x[i] is an x-coordinate
+            if np.mod(i,2) == 0:
+                # if the coordinate is within bounds, move on
+                if x[i] < b.xmax and x[i] > b.xmin:
+                    i+=1
+                else:
+                    # Move inside box
+                    x[i] = np.random.uniform(b.xmin,b.xmax)
+            # if i is odd, then x[i] is an y-coordinate            
+            else:
+                # if the coordinate is within bounds, move on
+                if x[i] < b.ymax and x[i] > b.ymin:
+                    i+=1
+                else:
+                    # Move inside box
+                    x[i] = np.random.uniform(b.ymin,b.ymax)
+
+
+        # Displace
+        i = 0        
+        while i < len(x):
+            xtmp = x[i] + np.random.uniform(-s,s)
+            # if i is even, then x[i] is an x-coordinate
+            if np.mod(i,2) == 0:
+                # if the coordinate is within bounds, move on
+                if xtmp < b.xmax and xtmp > b.xmin:
+                    x[i] = xtmp
+                    i+=1
+            # if i is odd, then x[i] is an y-coordinate            
+            else:
+                # if the coordinate is within bounds, move on
+                if xtmp < b.ymax and xtmp > b.ymin:
+                    x[i] = xtmp
+                    i+=1
+        return x
+
+
+def callBackFunc(x,f,accepted):
+    """
+    Prints the intermediate energies found by the basin hopping algorithm.
+    """
+    print("E: %0.4f accepted %d" %(f,int(accepted)))
+    
+    
+    
 def foldCoordList(coords):
     """
     Takes a 1x2N numpy array and returns 2xN numpy array
@@ -107,8 +185,8 @@ def energyFuncWrapper(coords,*args):
 
     E += energyFunc(coords,params)
 
-    for coord in coords:
-        E += bounds(coord)
+    # for coord in coords:
+    #     E += bounds(coord)
         
     return E
 
@@ -165,33 +243,55 @@ class BasinHopping():
         unfolded_coords = unfoldCoordList(self.init_coords)
 
         args = (self.params,) + (self.bounds,self.energyFunc)
+
+
+        MyTakeStep = TakeStep(0.5,self.bounds)
         minimizer_kwargs = {"method": "BFGS","args":args}
 
+        t1 = time.time()
         ret = basinhopping(energyFuncWrapper,
                            unfolded_coords,
                            minimizer_kwargs=minimizer_kwargs,
-                           stepsize=0.1,
+                           take_step=MyTakeStep,
+                           callback = callBackFunc,
+                           stepsize = 0.1,
                            T=1,
                            niter=200,
                            niter_success=5)
 
+        t2 = time.time() - t1
         self.ret = ret
         self.optimizedCoords = np.append(foldCoordList(ret.x),speciesList.reshape(len(speciesList),1),axis=1)
+        self.runtime = t2
+
+
+
 
 
 if __name__ == '__main__':
     
     bounds = Boundaries(0,30,0,30)
 
-    Na = 10
+    Na = 30
     cs = CoordinateSet()
     cs.createRandomSet(Na)
 
     params = [1.8,1.9,np.sqrt(0.02)]
+
+
     BS = BasinHopping(cs,LJenergy,params,bounds=[0,10,0,10])
     BS.runBasinHopping()
 
+    # Save
+    savestr = 'basinHoppingResult_Na_%d.pckl' %(Na)
+    f = open(savestr,'wb')
+    pickle.dump(BS,f)
+    f.close()
+
+    # Plot
     surfFig = plotSurfaceFig()
     surfFig.initializeSurfacePlot(Na)
     surfFig.plotSurface(BS.optimizedCoords,bounds=bounds)
     surfFig.fig.show()
+
+    
