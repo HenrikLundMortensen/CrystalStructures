@@ -69,15 +69,30 @@ plt.plot(xres[:, 0], xres[:, 1], 'o', color='blue')
 plt.show()
 """
 
-N = 3
+
+class MyBounds(object):
+    
+    def __init__(self, xmax=[0, 0, 0, 0, 0, 0, 0, 0], xmin=[2, 2, 2, 2, 2, 2, 2, 2]):
+        self.xmax = np.array(xmax)
+        self.xmin = np.array(xmin)
+        
+    def __call__(self, **kwargs):
+        x = kwargs["x_new"]
+        tmax = bool(np.all(x <= self.xmax))
+        tmin = bool(np.all(x >= self.xmin))
+        return tmax and tmin
+
+    
+N = 4
 eps = 1.8
 r0 = 1.1
 sigma = np.sqrt(0.02)
 params = [eps, r0, sigma]
 x0 = np.random.rand(N, 2) * 1
-x0 = np.reshape(x0, 2*N)
+x0 = np.reshape(x0, 2 * N)
+print(np.shape(x0))
 minimizer_kwargs = {"args": params}
-res = basinhopping(Ecalculator, x0, niter=200, minimizer_kwargs=minimizer_kwargs)
+res = basinhopping(Ecalculator, x0, niter=200, minimizer_kwargs=minimizer_kwargs, niter_success=5, accept_test=MyBounds)
 xres = np.reshape(res.x, (N, 2))
 plt.plot(xres[:, 0], xres[:, 1], 'o', color='blue')
 plt.show()
