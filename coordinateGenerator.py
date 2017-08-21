@@ -1,33 +1,15 @@
 import numpy as np
 import scipy as sp
-import matplotlib.pyplot as plt
 from scipy.optimize import basinhopping
-import energyCalculations.energyLennardJones as elj
+import matplotlib.pyplot as plt
+import time
 
 
-class globalMinimizer:
-
-    def __init__(self, coorSet, Efunc, params):
-        (self.Natoms, self.dim) = np.shape(coorSet)
-        self.x0 = np.reshape(coorSet, (self.Natoms * self.dim))
-        self.Efunc = Efunc
-        self.params = params
-
-    def calcE(self, x):
-        return self.Efunc(x, self.params)
-        
-    def basinhopping(self):
-        minimizer_kwargs = {"args": self.params}
-        res = basinhopping(self.Efunc, self.x0,
-                           minimizer_kwargs=minimizer_kwargs, niter=100)
-        return res
-
-
-def Ecalculator(x, params):
-    eps = params[0]
-    r0 = params[1]
-    sigma = params[2]
+def E_LJ(x, *params):
+    eps, r0, sigma = params
     E = 0
+    N = np.size(x, 0)
+    x = np.reshape(x, (int(N/2), 2))
     Natoms = np.size(x, 0)
     for i in range(Natoms):
         for j in range(i + 1, Natoms):
@@ -36,49 +18,64 @@ def Ecalculator(x, params):
             E2 = -eps * np.exp(-np.power(r - r0, 2) / (2 * sigma * sigma))
             E += E1 + E2
     return E
-            
 
-"""
-eps = 1.8
-r0 = 1.1
-sigma = 0.1
-params = [eps, r0, sigma]
-r = np.linspace(0.8,3,100)
-fig = plt.figure()
-ax = fig.gca()
-ax.plot(r,Ecalculator(r,params))
-ax.plot(r,Ecalculator(r,params))
 
-ax.set_ylabel('V(r)')
-ax.set_xlabel('r')
-ax.set_ylim([-3,2])
-plt.show()
+class MyBounds(object):
+    def __init__(self, xmax=[0, 0, 0, 0, 0, 0], xmin=[1, 1, 1, 1, 1, 1]):
+        self.xmax = np.array(xmax)
+        self.xmin = np.array(xmin)
 
-N = 2
-x = np.random.rand(N, 2) * 4
-eps = 1.8
-r0 = 1.1
-sigma = 0.1
-params = (eps, r0, sigma)
-minimizer = globalMinimizer(x, Ecalculator, params)
-res = minimizer.basinhopping()
-xres = np.reshape(res.x, (N, 2))
-print(res.x)
-plt.plot(x[:, 0], x[:, 1], 'o', color='red')
-plt.plot(xres[:, 0], xres[:, 1], 'o', color='blue')
-plt.show()
-"""
+    def __call__(self, **kwargs):
+        x = kwargs["x_new"]
+        tmax = bool(np.all(x <= self.xmax))
+        tmin = bool(np.all(x >= self.xmin))
+        return tmax and tmin
 
-N = 3
-eps = 1.8
-r0 = 1.1
+def mybounds(**kwargs):
+    x = kwargs["x_new"]
+    tmax = bool(np.all(x <= 1.0))
+    tmin = bool(np.all(x >= 0.0))
+    print(tmax and tmin)
+    return tmax and tmin
+
+
+def myTakeStep(x):
+    boxSize = 17
+    N = np.size(x, 0)
+    x = np.random.rand(N) * boxSize
+    return x
+
+# Make random atom configuration
+N = 60
+boxSize = 17
+x = np.random.rand(N, 2) * boxSize  # for plotting
+x0 = np.reshape(x, N*2)  # Reshape for basinhopping
+
+# Define parameters for energy expression
+eps = 1  # 1.8
+r0 = 1.4  # 1.1
 sigma = np.sqrt(0.02)
-params = [eps, r0, sigma]
-x0 = np.random.rand(N, 2) * 1
-x0 = np.reshape(x0, 2*N)
+params = (eps, r0, sigma)
 minimizer_kwargs = {"args": params}
-res = basinhopping(Ecalculator, x0, niter=200, minimizer_kwargs=minimizer_kwargs)
-xres = np.reshape(res.x, (N, 2))
-plt.plot(xres[:, 0], xres[:, 1], 'o', color='blue')
+
+# Run and time basinhopping
+t0 = time.time()
+res = basinhopping(E_LJ, x, niter=300, take_step=myTakeStep,
+                   niter_success=15, minimizer_kwargs=minimizer_kwargs)
+print("time:", time.time() - t0)
+print(res.message)
+# Extract optimum positions
+xres = res.x
+xres = np.reshape(xres, (N, 2))  # Reshape for plotting
+
+# Plot box
+Xbox = [0, boxSize, boxSize, 0, 0]
+Ybox = [0, 0, boxSize, boxSize, 0]
+plt.plot(Xbox, Ybox, color='black')
+# Plot atoms
+
+plt.plot(xres[:, 0], xres[:, 1], 'o', color='red', ms=2)
+#sideSpace = 0.1
+#plt.xlim([-sideSpace * boxSize, (1 + sideSpace) * boxSize])
+#plt.ylim([-sideSpace * boxSize, (1 + sideSpace) * boxSize])
 plt.show()
-print(res)
