@@ -31,9 +31,6 @@ class CoordinateSet:
         self.Coordinates = 0
         self.FeatureVectors = 0
 
-        # Different classes for calculation purposes
-        self.FeatureVectorCalculator = fv.FeatureVectorCalculator()
-
     def createRandomSet(self, size):  # SHOULD PUT RESTRICTIONS ON COORDINATES? MOVE TO DATAGENERATOR
         """ Create a random set of atoms, all of the same kind """
         self.Coordinates = [None] * size
@@ -44,10 +41,11 @@ class CoordinateSet:
     def calculateEnergy(self, energyCalculator, params):
         self.Energy = energyCalculator(self.Coordinates, params)
 
-    def calculateFeatures(self):
-        self.FeatureVectors = self.FeatureVectorCalculator.calculateFeatureVectorsGaussian(self.Coordinates)
+    def calculateFeatures(self, func=None):
+        self.FeatureVectorCalculator = fv.FeatureVectorCalculator(func)
+        self.FeatureVectors = self.FeatureVectorCalculator.calculateFeatureVectors(self.Coordinates)
 
-            
+
 if __name__ == '__main__':
     size = 2
     myCoordinateSet = CoordinateSet()
