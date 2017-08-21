@@ -31,7 +31,7 @@ class FeatureVectorCalculator:
 
     def __init__(self, func=None):
         self.Coordinates = 0
-        self.Rc = 0.5  # Perhaps take cutoff radius as parameter?
+        self.Rc = 5  # Perhaps take cutoff radius as parameter?
         if func:
             self.calculateSingleFeatureVector = types.MethodType(func, self)
 

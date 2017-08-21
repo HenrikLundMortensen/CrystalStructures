@@ -1,6 +1,5 @@
 import numpy as np
 import crystalStructures.featureVector as fv
-import crystalStructures.energyCalculations.energyLennardJones as elj
 
 
 class CoordinateSet:
@@ -23,7 +22,9 @@ class CoordinateSet:
 
     calculateEnergy: calculates the energy of the surface, given a specific energy calculator
 
-    calculateFeatures: calculates the feature vectors for a grid
+    calculateFeatures: calculates the feature vectors of the atoms
+
+    calculateClusters: calculate the clusters in the surface sample. Takes a KMean
     """
 
     def __init__(self):
@@ -35,7 +36,7 @@ class CoordinateSet:
         """ Create a random set of atoms, all of the same kind """
         self.Coordinates = [None] * size
         for coordinate in range(size):
-            self.Coordinates[coordinate] = np.random.rand(3)
+            self.Coordinates[coordinate] = np.random.rand(3) * 10
             self.Coordinates[coordinate][2] = 1
 
     def calculateEnergy(self, energyCalculator, params):
@@ -45,20 +46,41 @@ class CoordinateSet:
         self.FeatureVectorCalculator = fv.FeatureVectorCalculator(func)
         self.FeatureVectors = self.FeatureVectorCalculator.calculateFeatureVectors(self.Coordinates)
 
+    def calculateClusters(self, KMeans):
+        if isinstance(self.FeatureVectors[0], int):
+            clusterList = KMeans.predict(np.asarray(self.FeatureVectors).reshape(-1, 1))
+        else:
+            clusterList = KMeans.predict(self.FeatureVectors)
+        K = len(KMeans.cluster_centers_)  # Number of clusters
+        self.Clusters = np.bincount(clusterList, minlength=K)
 
+        
 if __name__ == '__main__':
-    size = 2
+    size = 5
+    # Create random set and calculate feature vectors
     myCoordinateSet = CoordinateSet()
     myCoordinateSet.createRandomSet(size)
     print('Coordinates are:', myCoordinateSet.Coordinates)
-    myCoordinateSet.calculateFeatures()
+    myCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
     print('Feature vectors are:', myCoordinateSet.FeatureVectors)
 
     # Calculate energy
+    import crystalStructures.energyCalculations.energyLennardJones as elj
     epsilon, r0, sigma = 1.8, 1.1, np.sqrt(0.02)
     params = [epsilon, r0, sigma]
     energyCalculator = elj.totalEnergyLJdoubleWell
     myCoordinateSet.calculateEnergy(energyCalculator, params)
+    print('Energy is:', myCoordinateSet.Energy)
 
+    # Cluster the feature vectors
+    import crystalStructures.clustering.clusterHandler as ch
+    myClusterHandler = ch.ClusterHandler(myCoordinateSet, 3)
+    myClusterHandler.doClustering()
+
+    # Count the atoms in each cluster in the set
+    myCoordinateSet.calculateClusters(myClusterHandler.Kmeans)
+    print(myCoordinateSet.Clusters)
+
+    
     
    

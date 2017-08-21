@@ -1,4 +1,5 @@
 from sklearn.cluster import KMeans
+import numpy as np
 
 
 class ClusterHandler:
@@ -12,7 +13,10 @@ class ClusterHandler:
         self.FeatureVectors = coordinateSet.FeatureVectors
 
     def doClustering(self):
-        self.Kmeans = KMeans(n_clusters=self.K).fit(self.FeatureVectors)
+        if isinstance(self.FeatureVectors[0], int):  # Special for 1d feature vectors
+            self.Kmeans = KMeans(n_clusters=self.K).fit(np.asarray(self.FeatureVectors).reshape(-1, 1))
+        else:
+            self.Kmeans = KMeans(n_clusters=self.K).fit(self.FeatureVectors)
 
         
 if __name__ == '__main__':
