@@ -1,6 +1,7 @@
 import numpy as np
 import scipy as sp
 from scipy.optimize import basinhopping
+import matplotlib.pyplot as plt
 import time
 import sys
 
@@ -33,6 +34,9 @@ x = np.random.rand(N, 2) * boxSize  # for plotting
 x0 = np.reshape(x, N * 2)  # Reshape for basinhopping
 
 # Define parameters for energy expression
+#eps = 1.8  # 1.8
+#r0 = 1.1  # 1.1
+#sigma = np.sqrt(0.02)
 i_params = int(sys.argv[1])
 params_file = np.loadtxt(fname='params.txt', delimiter='\t')
 eps, r0, sigma = params_file[i_params, :]
@@ -52,3 +56,18 @@ xres = res.x
 
 # print final positions to file
 np.savetxt('output' + str(i_params) + '.dat', xres, delimiter='\t')
+
+'''
+# Plot box
+Xbox = [0, boxSize, boxSize, 0, 0]
+Ybox = [0, 0, boxSize, boxSize, 0]
+plt.plot(Xbox, Ybox, color='black')
+
+# Plot atoms
+xres = np.reshape(xres, (N, 2))  # Reshape for plotting 
+plt.plot(xres[:, 0], xres[:, 1], 'o', color='red', ms=2)
+#sideSpace = 0.1
+#plt.xlim([-sideSpace * boxSize, (1 + sideSpace) * boxSize])
+#plt.ylim([-sideSpace * boxSize, (1 + sideSpace) * boxSize])
+plt.show()
+'''
