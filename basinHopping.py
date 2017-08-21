@@ -120,17 +120,17 @@ class BasinHopping():
     put into list. Decide on xmin, xmax, ymin, ymax for the boundary box. Initialize BasinHopping 
     class instance as
     
-    BS = BasinHopping(CoordinateSet class instance, 
+    BH = BasinHopping(CoordinateSet class instance, 
                       Energy function, 
                       list of parameters,
                       bounds=[xmin,xmax,ymin,ymax])
 
     Run the basin hopping algorithm with
 
-    BS.runBasinHopping()
+    BH.runBasinHopping()
 
-    The optimized coordinates is save as
-    BS.optimizedCoords
+    The optimized coordinates is stored as
+    BH.optimizedCoords
     """
 
     def __init__(self,cs,energyFunc,params,bounds=[-10000,10000,-10000,-10000]):
@@ -147,7 +147,7 @@ class BasinHopping():
         self.cs = cs
         self.bounds = Boundaries(bounds[0],bounds[1],bounds[2],bounds[3])
         self.energyFunc = energyFunc
-        self.params = tuple(params)   
+        self.params = tuple(params)
 
     def runBasinHopping(self):
         """
@@ -160,11 +160,11 @@ class BasinHopping():
         self.optimizedCoords: Optimized coordinates of atoms
         """
 
-        self.init_coords = cs.Coordinates
+        self.init_coords = self.cs.Coordinates
         speciesList = np.transpose(self.init_coords)[2]
         unfolded_coords = unfoldCoordList(self.init_coords)
 
-        args = ([self.params],) + (self.bounds,self.energyFunc)
+        args = (self.params,) + (self.bounds,self.energyFunc)
         minimizer_kwargs = {"method": "BFGS","args":args}
 
         ret = basinhopping(energyFuncWrapper,
@@ -177,18 +177,21 @@ class BasinHopping():
 
         self.ret = ret
         self.optimizedCoords = np.append(foldCoordList(ret.x),speciesList.reshape(len(speciesList),1),axis=1)
-        
-bounds = Boundaries(0,30,0,30)
 
-Na = 10
-cs = CoordinateSet()
-cs.createRandomSet(Na)
 
-params = [1.8,1.9,np.sqrt(0.02)]
-BS = BasinHopping(cs,LJenergy,params,bounds=[0,10,0,10])
-BS.runBasinHopping()
+if __name__ == '__main__':
+    
+    bounds = Boundaries(0,30,0,30)
 
-surfFig = plotSurfaceFig()
-surfFig.initializeSurfacePlot(Na)
-surfFig.plotSurface(BS.optimizedCoords,bounds=bounds)
-surfFig.fig.show()
+    Na = 10
+    cs = CoordinateSet()
+    cs.createRandomSet(Na)
+
+    params = [1.8,1.9,np.sqrt(0.02)]
+    BS = BasinHopping(cs,LJenergy,params,bounds=[0,10,0,10])
+    BS.runBasinHopping()
+
+    surfFig = plotSurfaceFig()
+    surfFig.initializeSurfacePlot(Na)
+    surfFig.plotSurface(BS.optimizedCoords,bounds=bounds)
+    surfFig.fig.show()
