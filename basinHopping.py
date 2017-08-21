@@ -272,26 +272,16 @@ if __name__ == '__main__':
     
     bounds = Boundaries(0,30,0,30)
 
-    Na = 30
+    Na = 20
     cs = CoordinateSet()
     cs.createRandomSet(Na)
 
-    params = [1.8,1.9,np.sqrt(0.02)]
+    params = [1.8,1.1,np.sqrt(0.02)]
 
 
     BS = BasinHopping(cs,LJenergy,params,bounds=[0,10,0,10])
     BS.runBasinHopping()
+    print(BS.runtime)
 
-    # Save
-    savestr = 'basinHoppingResult_Na_%d.pckl' %(Na)
-    f = open(savestr,'wb')
-    pickle.dump(BS,f)
-    f.close()
-
-    # Plot
-    surfFig = plotSurfaceFig()
-    surfFig.initializeSurfacePlot(Na)
-    surfFig.plotSurface(BS.optimizedCoords,bounds=bounds)
-    surfFig.fig.show()
 
     
