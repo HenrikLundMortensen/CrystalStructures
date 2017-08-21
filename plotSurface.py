@@ -36,26 +36,38 @@ class plotSurfaceFig:
 
         # Set background color and x and y limits
         ax.set_facecolor((0.9,0.9,1))
-        # ax.set_xlim([0-0.2,1.2])
-        # ax.set_ylim([-0.2,1.2])
-        # ax.set_xticks([])
-        # ax.set_yticks([])
 
         # Create patches.Circle instances
         p = []
         for i in range(Na):
             p.append(patches.Circle(xy=(0,0),radius=0))
             ax.add_patch(p[i])
-        
+
+        # Create rectangle to define boundary box
+        bb = patches.Polygon([[0,0],[0,0],[0,0],[0,0]],lw=0,fill=False,color='black')
+        ax.add_patch(bb)
+
+        self.bb = bb
         self.patches = p
         
-    def plotSurface(self,cs):
+    def plotSurface(self,cs,**kwargs):
         """
         Plots surface by updating the existing patches.Circle instances in self. 
 
         Input:
         cs: Coordinate set class instance
         """
+
+
+        if kwargs is not None:
+            for key,value in kwargs.items():
+                if key == "bounds":
+                    self.bb.xy = [[value.xmin,value.ymin],
+                                  [value.xmin,value.ymax],
+                                  [value.xmax,value.ymax],
+                                  [value.xmax,value.ymin]]
+                    self.bb.set_linewidth(2)
+                    
         # Coordinates = cs.Coordinates
         Coordinates = cs
         
@@ -75,6 +87,7 @@ class plotSurfaceFig:
 
         self.masterAx.set_xlim([xmin-abs(xmin)*0.2,xmax+abs(xmax)*0.2])
         self.masterAx.set_ylim([ymin-abs(ymin)*0.2,ymax+abs(ymax)*0.2])
+        self.masterAx.set_aspect('equal')
         
         radius = 0.05
                          
@@ -84,11 +97,15 @@ class plotSurfaceFig:
             p = self.patches[i]
             p.center = (coords[0],coords[1])
             p.radius = radius
-            p.set_alpha(0.4)
+            p.set_alpha(0.9)
 
             p.set_color(colorlist[int(coords[2])])
             i += 1
 
+            
+
+
+            
         # Pause to update the graphics
         plt.pause(0.001)
             
