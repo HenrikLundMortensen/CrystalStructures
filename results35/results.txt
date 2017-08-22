@@ -1,0 +1,5 @@
+Natoms = 35, niter = 300, niter_succes = 15,
+take_step = uniform distribution inside 17x17 area
+epsilon = 1.8
+r0 = linspace(1.1, 2, 10)
+sigma = sqrt(0.02)
