@@ -31,7 +31,7 @@ class FeatureVectorCalculator:
 
     def __init__(self, func=None):
         self.Coordinates = 0
-        self.Rc = 5  # Perhaps take cutoff radius as parameter?
+        self.Rc = 10  # Perhaps take cutoff radius as parameter?
         if func:
             self.calculateSingleFeatureVector = types.MethodType(func, self)
 
@@ -64,44 +64,53 @@ class FeatureVectorCalculator:
 def calculateFeatureVectorGaussian(self, coordinateSet, i):
     ''' Calculates the feature vector based on Gaussian approach. Initially just a 2D vector
     with one radial and one angular component. Need to figure out a way to decide on parameters.
-    These are just manually set at the moment.'''
+    These are just manually set at the moment. Can implement parameters way better.'''
         
-    featureVector = np.zeros(2)   # Set size of feature vector here
+    featureVector = np.zeros(6)   # Set size of feature vector here
     dataSize = len(coordinateSet)
         
-    eta, Rs = 1, 1                # Guess some parameters for radial part
+    eta, Rs = 1, 0                # Guess some parameters for radial part
     x0, y0 = coordinateSet[i][:2]
-    f1 = 0
-    for j in range(dataSize):     # Calculate radial part
-        if j == i:
-            continue
-        x, y = coordinateSet[j][:2]
-        Rij = np.sqrt((x0 - x)**2 + (y0 - y)**2)
-        if Rij <= self.Rc:
-            f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc * self.Rc) * self.cutOffFunction(Rij)
-
+    for s in range(3):
+        if s == 1:
+            eta, Rs = 0.05, 0
+        if s == 2:
+            eta, Rs = 80, 2
+        f1 = 0
+        for j in range(dataSize):     # Calculate radial part
+            if j == i:
+                continue
+            x, y = coordinateSet[j][:2]
+            Rij = np.sqrt((x0 - x)**2 + (y0 - y)**2)
+            if Rij <= self.Rc:
+                f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc * self.Rc) * self.cutOffFunction(Rij)
+                #f1 = Rij  # Test for two atoms
+        featureVector[s] = f1
     xi, lamb, eta = 2, 1, 1    # Guess some parameters for angular part
     f2 = 0                     # Calculate angular part
-    for j in range(dataSize):
-        if j == i:
-            continue
-        for k in range(j, dataSize):
-            if k == j or k == i:
+    for p in range(3):
+        if p == 1:
+            xi, lamb, eta = 1, -1, 2
+        if p == 2:
+            xi, lamb, eta = 4, 1, 80
+        for j in range(dataSize):
+            if j == i:
                 continue
-            # Calculate the distances between atoms
-            RijVec = coordinateSet[j][:2] - coordinateSet[i][:2]
-            Rij = np.linalg.norm(RijVec)
+            for k in range(j, dataSize):
+                if k == j or k == i:
+                    continue
+                # Calculate the distances between atoms
+                RijVec = coordinateSet[j][:2] - coordinateSet[i][:2]
+                Rij = np.linalg.norm(RijVec)
 
-            RikVec = coordinateSet[k][:2] - coordinateSet[i][:2]
-            Rik = np.linalg.norm(RikVec)
+                RikVec = coordinateSet[k][:2] - coordinateSet[i][:2]
+                Rik = np.linalg.norm(RikVec)
 
-            RjkVec = coordinateSet[k][:2] - coordinateSet[j][:2]
-            Rjk = np.linalg.norm(RjkVec)
+                RjkVec = coordinateSet[k][:2] - coordinateSet[j][:2]
+                Rjk = np.linalg.norm(RjkVec)
 
-            f2 += (1 + lamb * np.cos(np.dot(RijVec, RikVec) / (Rij * Rik)))**xi * np.exp(- (Rij * Rij + Rik * Rik + Rjk * Rjk) / self.Rc**2) * self.cutOffFunction(Rij) * self.cutOffFunction(Rik) * self.cutOffFunction(Rjk)
-    f2 *= 2**(1 - xi)
-
+                f2 += (1 + lamb * np.cos(np.dot(RijVec, RikVec) / (Rij * Rik)))**xi * np.exp(- eta * (Rij * Rij + Rik * Rik + Rjk * Rjk) / self.Rc**2) * self.cutOffFunction(Rij) * self.cutOffFunction(Rik) * self.cutOffFunction(Rjk)
+        f2 *= 2**(1 - xi)
+        featureVector[s + p + 1] = f2
     # Set and return feature vector
-    featureVector[0] = f1
-    featureVector[1] = f2
     return featureVector

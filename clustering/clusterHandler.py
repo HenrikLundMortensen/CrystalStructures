@@ -16,7 +16,8 @@ class ClusterHandler:
         if isinstance(self.FeatureVectors[0], int):  # Special for 1d feature vectors
             self.Kmeans = KMeans(n_clusters=self.K).fit(np.asarray(self.FeatureVectors).reshape(-1, 1))
         else:
-            self.Kmeans = KMeans(n_clusters=self.K).fit(self.FeatureVectors)
+            featVec = np.vstack(self.FeatureVectors)  # Convert into numpy array
+            self.Kmeans = KMeans(n_clusters=self.K).fit(featVec)
 
         
 if __name__ == '__main__':

@@ -35,9 +35,10 @@ class CoordinateSet:
     def createRandomSet(self, size):  # SHOULD PUT RESTRICTIONS ON COORDINATES? MOVE TO DATAGENERATOR
         """ Create a random set of atoms, all of the same kind """
         self.Coordinates = [None] * size
-        for coordinate in range(size):
-            self.Coordinates[coordinate] = np.random.rand(3) * 10
-            self.Coordinates[coordinate][2] = 1
+        
+        for i in range(size):
+            self.Coordinates[i] = np.random.rand(3) * 40
+            self.Coordinates[i][2] = 1
 
     def calculateEnergy(self, energyCalculator, params):
         self.Energy = energyCalculator(self.Coordinates, params)
@@ -50,7 +51,8 @@ class CoordinateSet:
         if isinstance(self.FeatureVectors[0], int):
             clusterList = KMeans.predict(np.asarray(self.FeatureVectors).reshape(-1, 1))
         else:
-            clusterList = KMeans.predict(self.FeatureVectors)
+            featVec = np.vstack(self.FeatureVectors)
+            clusterList = KMeans.predict(featVec)
         K = len(KMeans.cluster_centers_)  # Number of clusters
         self.Clusters = np.bincount(clusterList, minlength=K)
 

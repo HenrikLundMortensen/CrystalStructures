@@ -39,7 +39,7 @@ if __name__ == '__main__':
     import crystalStructures.clustering.clusterHandler as ch
     
     size = 2
-    N = 100
+    N = 10000
     epsilon, r0, sigma = 1.8, 1.1, np.sqrt(0.02)
     params = [epsilon, r0, sigma]
     energyCalculator = elj.totalEnergyLJdoubleWell
@@ -52,10 +52,10 @@ if __name__ == '__main__':
     mainCoordinateSet.calculateEnergy(energyCalculator, params)
     mainCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
     energyList.append(mainCoordinateSet.Energy)
-    featureVectorList.append(mainCoordinateSet.FeatureVectors)
+    featureVectorList.append(mainCoordinateSet.FeatureVectors[:])
 
     # Create large data set
-    for i in range(N):
+    for i in range(N - 1):
         # Create a new set
         myCoordinateSet = cs.CoordinateSet()
         myCoordinateSet.createRandomSet(size)
@@ -69,8 +69,7 @@ if __name__ == '__main__':
         featureVectorList.append(myCoordinateSet.FeatureVectors)
 
     # Now do the clustering using the big set
-    K = 5
-    mainCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
+    K = 1000
     myClusterHandler = ch.ClusterHandler(mainCoordinateSet, K)
     myClusterHandler.doClustering()
 
@@ -82,6 +81,7 @@ if __name__ == '__main__':
         tempCoordinateSet.calculateClusters(myClusterHandler.Kmeans)
         clusterList.append(tempCoordinateSet.Clusters)
 
+    # Create the energy model
     EModel = createEnergyModel(np.asarray(clusterList), np.asarray(energyList))
 
     # Now create some test data
@@ -101,13 +101,16 @@ if __name__ == '__main__':
         # Save the new data
         ClusterList.append(myCoordinateSet.Clusters)
         EnergyList.append(myCoordinateSet.Energy)
-        
+
     # Now predict energies of the test set
     EnergyListPredict = []
     for i in range(N):
-        EnergyListPredict.append(getEnergyFromModel(np.asarray(ClusterList[i]), EModel))
+        EnergyListPredict.append(getEnergyFromModel(np.asarray(ClusterList[i]), EModel))  # For training data
 
     # Calculate energy difference
-    error = np.dot(np.asarray(EnergyListPredict) - np.asarray(EnergyList), np.asarray(EnergyListPredict) - np.asarray(EnergyList)) / N
+    error = np.sqrt(np.dot(np.asarray(EnergyListPredict) - np.asarray(EnergyList), np.asarray(EnergyListPredict) - np.asarray(EnergyList)))/N
 
     print('The average error is:', error)
+    print('The average energy is:', np.average(np.asarray(EnergyList)))
+    print('Error relative to average energy is:', error / np.average(np.asarray(EnergyList)))
+
