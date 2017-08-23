@@ -106,24 +106,3 @@ if __name__ == "__main__":
     xres = relax.res.x
     print("\nRuntime:", relax.runtime)
     relax.plotResults()
-
-"""
-class tkStep(object):
-    def __init__(self, stepsize=0.5):
-        self.stepsize = stepsize
-    def __call__(self, x):
-        s = self.stepsize
-        x += np.random.uniform(-s, s, x.shape)
-        xmin, xmax = 0, 6
-        above = bool(np.all(x >= xmax))
-        below = bool(np.all(x <= xmin))
-        if above or below:
-            self.nstep += 1
-            
-        return x
-   
-k = np.random.rand(10) * 2 - 0.5
-hlow = k < 0
-hhigh = k > 1
-print(np.c_[k, k*hlow, k*hhigh])
-"""
