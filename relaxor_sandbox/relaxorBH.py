@@ -6,6 +6,18 @@ import time
 
 
 def E_LJ_jac(x, *params):
+    """
+    Calculates total energy and gradient of N atoms interacting with a
+    double Lennard-Johnes potential.
+    
+    Input:
+    x: positions of atoms in form x= [x1,y2,x2,y2,...]
+    params: parameters for the Lennard-Johnes potential
+
+    Output:
+    E: Total energy
+    dE: gradient of total energy
+    """
     eps, r0, sigma = params
     N = np.size(x, 0)
     x = np.reshape(x, (int(N / 2), 2))
@@ -36,7 +48,10 @@ def E_LJ_jac(x, *params):
 
 
 class takeStep(object):
-
+    """
+    Transforms the coordinates into new random positions inside square box
+    with sidelrngth "boxSize"
+    """
     def __init__(self, boxSize):
         self.boxSize = boxSize
 
@@ -51,7 +66,24 @@ def print_fun(x, f, accepted):
 
 
 class relaxor:
+    """
+    Class for performing basinhopping and plotting the results.
+    
+    Input:
+    x0: Start positions of the atoms
+    Efunc: function that returns total energy and gradient of the energy
+    params: parameters for the energy expression
+    boxSize: The sidelength of the square box that the atoms are confined in
 
+    Output:
+    self.res.x: optimum positions
+    self.res.fun: optimum energy
+    self.runtime: runtime of the basinhopping algorithm
+    
+    Methods:
+    runRelaxor: Perform the basinhopping optimixation.
+    plotResults: Plot the optimum structure.
+    """
     def __init__(self, x0, Efunc, params, boxSize):
         self.x = x0
         self.Efunc = Efunc
