@@ -5,22 +5,6 @@ import matplotlib.pyplot as plt
 import time
 
 
-def E_LJ(x, *params):
-    eps, r0, sigma = params
-    N = np.size(x, 0)
-    x = np.reshape(x, (int(N / 2), 2))
-    Natoms = np.size(x, 0)
-
-    E = 0
-    for i in range(Natoms):
-        for j in range(i + 1, Natoms):
-            r = np.sqrt(sp.dot(x[i] - x[j], x[i] - x[j]))
-            E1 = 1 / np.power(r, 12) - 2 / np.power(r, 6)
-            E2 = -eps * np.exp(-np.power(r - r0, 2) / (2 * sigma * sigma))
-            E += E1 + E2
-    return E
-
-
 def E_LJ_jac(x, *params):
     eps, r0, sigma = params
     N = np.size(x, 0)
@@ -51,55 +35,76 @@ def E_LJ_jac(x, *params):
     return E, dE
 
 
-def myTakeStep(x):
-    boxSize = 6
-    N = np.size(x, 0)
-    x = np.random.rand(N) * boxSize
-    return x
+class takeStep(object):
+
+    def __init__(self, boxSize):
+        self.boxSize = boxSize
+
+    def __call__(self, x):
+        N = np.size(x, 0)
+        x = np.random.rand(N) * self.boxSize
+        return x
 
 
 def print_fun(x, f, accepted):
     print("at minimum %.4f accepted %d" % (f, int(accepted)))
 
 
-# Make random atom configuration
-N = 10
-boxSize = 6
-x = np.random.rand(N, 2) * boxSize  # for plotting
-x0 = np.reshape(x, N * 2)  # Reshape for basinhopping
+class relaxor:
 
-# Define parameters for energy expression
-eps = 1.8  # 1.8
-r0 = 1.1  # 1.1
-sigma = np.sqrt(0.02)
-params = (eps, r0, sigma)
+    def __init__(self, x0, Efunc, params, boxSize):
+        self.x = x0
+        self.Efunc = Efunc
+        self.params = params
+        self.boxSize = boxSize
 
-# Run and time basinhopping with analytic gradient
-minimizer_kwargs = {"args": params, "jac": True}
-t0 = time.time()
-res = basinhopping(E_LJ_jac, x, niter=300, take_step=myTakeStep,
-                   niter_success=5, minimizer_kwargs=minimizer_kwargs,
-                   callback=print_fun)
-print("\ntime:", time.time() - t0)
-print("\n", res.message)
-xres = res.x
+    def print_fun(x, f, accepted):
+        print("at minimum %.4f accepted %d" % (f, int(accepted)))
+        
+    def runRelaxor(self):
+        myTakeStep = takeStep(self.boxSize) 
+        minimizer_kwargs = {"args": params, "jac": True}
+        t0 = time.time()
+        self.res = basinhopping(E_LJ_jac, x,
+                                niter=300,
+                                take_step=myTakeStep,
+                                niter_success=5,
+                                minimizer_kwargs=minimizer_kwargs,
+                                callback=print_fun)
+        self.runtime = time.time() - t0
 
-# compare optimum energies for the two runs
-E_anl_opt, dE = E_LJ_jac(xres, eps, r0, sigma)
-print("\nOptimum Energy:", E_anl_opt)
+    def plotResults(self):
+        # Plot box
+        Xbox = [0, self.boxSize, self.boxSize, 0, 0]
+        Ybox = [0, 0, self.boxSize, self.boxSize, 0]
+        plt.plot(Xbox, Ybox, color='black')
 
-# Plot box
-Xbox = [0, boxSize, boxSize, 0, 0]
-Ybox = [0, 0, boxSize, boxSize, 0]
-plt.plot(Xbox, Ybox, color='black')
+        # plot atoms
+        xres = np.reshape(self.res.x, (N, 2))  # Reshape for plotting
+        plt.plot(xres[:, 0], xres[:, 1], 'o', color='red', ms=2)
+        plt.show()
 
-# Plot atoms
-xres = np.reshape(xres, (N, 2))  # Reshape for plotting
-plt.plot(xres[:, 0], xres[:, 1], 'o', color='red', ms=2)
-# sideSpace = 0.1
-# plt.xlim([-sideSpace * boxSize, (1 + sideSpace) * boxSize])
-# plt.ylim([-sideSpace * boxSize, (1 + sideSpace) * boxSize])
-plt.show()
+
+if __name__ == "__main__":
+
+    # Make random atom configuration
+    N = 10
+    boxSize = 6
+    x = np.random.rand(N, 2) * boxSize  # for plotting
+    x0 = np.reshape(x, N * 2)  # Reshape for basinhopping
+    
+    # Define parameters for energy expression
+    eps = 1.8  # 1.8
+    r0 = 1.1  # 1.1
+    sigma = np.sqrt(0.02)
+    params = (eps, r0, sigma)
+
+    # Run and time basinhopping
+    relax = relaxor(x, E_LJ_jac, params, boxSize)
+    relax.runRelaxor()
+    xres = relax.res.x
+    print("\nRuntime:", relax.runtime)
+    relax.plotResults()
 
 """
 class tkStep(object):
