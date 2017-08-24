@@ -4,7 +4,19 @@ import numpy as np
 
 class ClusterHandler:
     """
-    Explanation goes here
+    Takes a CoordinateSet class with calculated feature vectors
+    Then cluster the feature vectors into a given number of clusters 
+    and returns the KMeans
+
+    #### Attributes ####
+    CoordinateSet: in instance of the CoordinateSet class 
+    K: the number of clusters
+    FeatureVectors: the feature vectors one wish to cluster
+    KMeans: an instance of KMeans from sklearn.cluster
+    
+    #### Methods ####
+    __init__ : takes a coordinateSet and the desired number of clusters
+    doClustering: cluster the given coordinateSet
     """
 
     def __init__(self, coordinateSet, clusters):
@@ -18,30 +30,4 @@ class ClusterHandler:
         else:
             featVec = np.vstack(self.FeatureVectors)  # Convert into numpy array
             self.Kmeans = KMeans(n_clusters=self.K).fit(featVec)
-
-        
-if __name__ == '__main__':
-    import crystalStructures.coordinateSet as cs
-    import matplotlib.pyplot as plt
-    import numpy as np
-    size = 10
-
-    # Create coordinate set
-    myCoordinateSet = cs.CoordinateSet()
-    myCoordinateSet.createRandomSet(size)
-    myCoordinateSet.calculateFeatures()
-
-    # Create cluster handler
-    clusters = 5
-    myClusterHandler = ClusterHandler(myCoordinateSet, clusters)
-    myClusterHandler.doClustering()
-    xData = yData = np.zeros(size)
-    for i in range(size):
-        data = myClusterHandler.FeatureVectors[i]
-        xData[i] = data[0]
-        yData[i] = data[1]
-    for i in range(size):
-        color = myClusterHandler.Kmeans.labels_[i]
-        plt.plot(xData[i], yData[i], 'o', color='C' + str(color))
-    plt.show()
     
