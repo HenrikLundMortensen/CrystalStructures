@@ -39,7 +39,7 @@ if __name__ == '__main__':
     import crystalStructures.clustering.clusterHandler as ch
     
     size = 2
-    N = 10000
+    N = 1000
     epsilon, r0, sigma = 1.8, 1.1, np.sqrt(0.02)
     params = [epsilon, r0, sigma]
     energyCalculator = elj.totalEnergyLJdoubleWell

@@ -1,7 +1,6 @@
 import numpy as np
 import scipy as sp
 from scipy.optimize import basinhopping
-import matplotlib.pyplot as plt
 import time
 
 
@@ -105,19 +104,6 @@ class relaxor:
                                 callback=print_fun)
         self.runtime = time.time() - t0
 
-    def plotResults(self):
-        N = np.size(self.x, 0)
-        # Plot box
-        Xbox = [0, self.boxSize, self.boxSize, 0, 0]
-        Ybox = [0, 0, self.boxSize, self.boxSize, 0]
-        plt.plot(Xbox, Ybox, color='black')
-
-        # plot atoms
-        xres = np.reshape(self.res.x, (N, 2))  # Reshape for plotting
-        plt.plot(xres[:, 0], xres[:, 1], 'o', color='red', ms=2)
-        plt.show()
-
-
 if __name__ == "__main__":
 
     # Make random atom configuration
@@ -137,4 +123,3 @@ if __name__ == "__main__":
     relax.runRelaxor()
     xres = relax.res.x
     print("\nRuntime:", relax.runtime)
-    relax.plotResults()

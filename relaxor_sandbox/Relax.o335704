@@ -1,0 +1,145 @@
+at minimum -606.5810 accepted 0
+at minimum -538.9638 accepted 0
+at minimum -635.0791 accepted 0
+at minimum -627.7021 accepted 0
+at minimum -644.3854 accepted 0
+at minimum -485.4912 accepted 0
+at minimum -418.4382 accepted 0
+at minimum -227.6911 accepted 0
+at minimum -316.0875 accepted 0
+at minimum -323.2550 accepted 0
+at minimum -338.0318 accepted 0
+at minimum -236.5260 accepted 0
+at minimum -526.9791 accepted 1
+at minimum -445.3717 accepted 0
+at minimum -516.4989 accepted 0
+at minimum -539.7860 accepted 1
+at minimum -518.1974 accepted 0
+at minimum -458.2165 accepted 0
+at minimum -49.9021 accepted 0
+at minimum -523.4133 accepted 0
+at minimum -535.5299 accepted 0
+at minimum -427.6736 accepted 0
+at minimum -221.7043 accepted 0
+at minimum -273.3648 accepted 0
+at minimum -314.2661 accepted 0
+at minimum -324.1098 accepted 0
+at minimum -399.4064 accepted 1
+at minimum -376.2588 accepted 0
+at minimum -403.2852 accepted 1
+at minimum -227.2878 accepted 0
+at minimum -314.6495 accepted 0
+at minimum -402.2507 accepted 0
+at minimum -260.1858 accepted 0
+at minimum -325.4408 accepted 0
+at minimum -394.1589 accepted 0
+at minimum -389.9722 accepted 1
+at minimum -398.5239 accepted 1
+at minimum -251.2854 accepted 0
+at minimum -387.0079 accepted 0
+at minimum -418.4367 accepted 1
+at minimum -137.0784 accepted 0
+at minimum -387.0204 accepted 0
+at minimum -341.3008 accepted 0
+at minimum -386.0072 accepted 0
+at minimum -396.0255 accepted 0
+at minimum -346.9514 accepted 0
+at minimum -398.7080 accepted 1
+at minimum -433.0101 accepted 1
+at minimum -438.6900 accepted 1
+at minimum -410.1766 accepted 0
+at minimum -413.2286 accepted 0
+at minimum -371.4642 accepted 0
+at minimum -339.1977 accepted 0
+at minimum -405.9390 accepted 0
+at minimum -350.6629 accepted 0
+at minimum -402.3057 accepted 1
+at minimum -379.6829 accepted 0
+at minimum -389.7933 accepted 0
+at minimum -405.8303 accepted 1
+at minimum -409.9815 accepted 1
+at minimum -386.5323 accepted 0
+at minimum -385.1300 accepted 0
+at minimum -401.8908 accepted 0
+at minimum -428.2474 accepted 1
+at minimum -422.5549 accepted 0
+at minimum -277.7521 accepted 0
+at minimum -390.1090 accepted 0
+at minimum -286.8387 accepted 0
+at minimum -418.4912 accepted 0
+at minimum -240.8368 accepted 0
+at minimum -345.9126 accepted 0
+at minimum -412.5381 accepted 1
+at minimum -258.4250 accepted 0
+at minimum -341.5028 accepted 0
+at minimum -423.8299 accepted 1
+at minimum -415.8173 accepted 0
+at minimum -355.5512 accepted 0
+at minimum -361.5024 accepted 0
+at minimum -327.3339 accepted 0
+at minimum -176.6280 accepted 0
+at minimum -387.0794 accepted 0
+at minimum -447.1846 accepted 0
+at minimum -481.0571 accepted 1
+at minimum -497.1954 accepted 1
+at minimum -476.3781 accepted 0
+at minimum -494.2852 accepted 0
+at minimum -452.6683 accepted 0
+at minimum -368.6874 accepted 0
+at minimum -394.8409 accepted 0
+at minimum -438.3939 accepted 0
+at minimum -422.2410 accepted 1
+at minimum -436.4675 accepted 1
+at minimum -351.3228 accepted 0
+at minimum -427.4487 accepted 0
+at minimum -367.0260 accepted 0
+at minimum -371.0389 accepted 0
+at minimum -436.5398 accepted 1
+at minimum -441.8302 accepted 1
+at minimum -419.6911 accepted 0
+at minimum -399.1816 accepted 0
+at minimum -405.4347 accepted 0
+at minimum -452.3698 accepted 1
+at minimum -422.4680 accepted 0
+at minimum -371.0052 accepted 0
+at minimum -432.7251 accepted 0
+at minimum -448.9534 accepted 0
+at minimum -402.5779 accepted 0
+at minimum -455.2567 accepted 1
+at minimum -426.2241 accepted 0
+at minimum -419.3613 accepted 0
+at minimum -377.4905 accepted 0
+at minimum -455.6793 accepted 1
+at minimum -427.5217 accepted 0
+at minimum -343.6123 accepted 0
+at minimum -457.9782 accepted 1
+at minimum -54.4784 accepted 0
+at minimum -435.5193 accepted 0
+at minimum -440.4374 accepted 0
+at minimum -355.3605 accepted 0
+at minimum -455.1477 accepted 0
+at minimum -428.3732 accepted 0
+
+
+Usage statistics:
+Command:  dispatch -T 1 -e ssh -SS -c 'python callRelaxor.py 100' 0 1 2 3 4 5 6 7 8 9 
+Nodename         Tasks   AccWalltime
+s11n32               5         31441
+s11n34               5         49082
+Total number of tasks run:       10
+Number of nodes/cpus:            2/10
+Total AccWalltime for all tasks: 80523
+Total walltime for the job:      27094
+P-factor:                        3.0
+
+Nodename  TaskID  Wallt[s]  Command
+s11n32        0       1951  python callRelaxor.py 100 0
+s11n34        1       5237  python callRelaxor.py 100 1
+s11n32        2      10860  python callRelaxor.py 100 2
+s11n34        3      27094  python callRelaxor.py 100 3
+s11n32        4       6497  python callRelaxor.py 100 4
+s11n34        5       5701  python callRelaxor.py 100 5
+s11n32        6       9960  python callRelaxor.py 100 6
+s11n34        7       5665  python callRelaxor.py 100 7
+s11n32        8       2173  python callRelaxor.py 100 8
+s11n34        9       5385  python callRelaxor.py 100 9
