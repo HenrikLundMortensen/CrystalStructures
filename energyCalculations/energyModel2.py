@@ -4,6 +4,7 @@ import crystalStructures.coordinateSet as cs
 import crystalStructures.energyCalculations.energyLennardJones as elj
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
+import sklearn.model_selection as ms
 import random
 
 
@@ -75,18 +76,28 @@ def generateData1D(dataSets):
     
     
 if __name__ == '__main__':
-    particles, dataSets = 2, 500000
+    particles, dataSets = 2, 50000
     FeatureVectors, EnergyList = generateData1D(dataSets)
-
+    FeatureVectors = FeatureVectors[:, 0]
+    FeatureVectors = FeatureVectors.reshape(-1, 1)
+    
     # Preprocess the data
     scaler = StandardScaler()
     scaler.fit(FeatureVectors)
     FeatureVectors = scaler.transform(FeatureVectors)
+    
+    # Now create the model
+    myANN = MLPRegressor(hidden_layer_sizes=(30), max_iter=1000, solver='lbfgs', activation='relu', alpha=0.001, learning_rate_init=0.01)
 
-    # Now train the model
-    myANN = MLPRegressor(hidden_layer_sizes=(10,), max_iter=1000, solver='adam', activation='relu', alpha=0.01)
+#    The below can be used to find optimal parameters for the MLPRegressor.
+#    parameters = {'alpha': 10.0 ** -np.arange(1, 7), 'hidden_layer_sizes': [(10, 10, 10), (30,), (5, 5), (3,)], 'solver': ['adam', 'lbfgs'], 'learning_rate_init': [0.001, 0.01, 0.01]}
+#   gscv = ms.GridSearchCV(myANN, param_grid=parameters)
+#   gscv.fit(FeatureVectors, EnergyList)
+#   print('Best parameters are:', gscv.best_params_)
+
+    # Train the model
     myANN.fit(FeatureVectors, EnergyList)
-
+    
     # Check predictions on training data first
     EnergyListPredict = myANN.predict(FeatureVectors)
     error = np.sqrt(np.dot(EnergyList - EnergyListPredict, EnergyList - EnergyListPredict)) / dataSets
@@ -96,8 +107,10 @@ if __name__ == '__main__':
     print('Error relative to average energy is:', error / np.average(EnergyList), '\n')
     
     # Generate some test data
-    particles, dataSets = 2, 3
+    particles, dataSets = 2, 100
     FeatureVectors, EnergyList = generateData1D(dataSets)
+    FeatureVectors = FeatureVectors[:, 0]
+    FeatureVectors = FeatureVectors.reshape(-1, 1)
     
     # Now preprocess the new feature vectors
     FeatureVectors = scaler.transform(FeatureVectors)
