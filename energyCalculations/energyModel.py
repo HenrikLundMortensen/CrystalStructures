@@ -108,7 +108,7 @@ if __name__ == '__main__':
         EnergyListPredict.append(getEnergyFromModel(np.asarray(ClusterList[i]), EModel))  # For training data
 
     # Calculate energy difference
-    error = np.sqrt(np.dot(np.asarray(EnergyListPredict) - np.asarray(EnergyList), np.asarray(EnergyListPredict) - np.asarray(EnergyList)))/N
+    error = np.sqrt(np.dot(np.asarray(EnergyListPredict) - np.asarray(EnergyList), np.asarray(EnergyListPredict) - np.asarray(EnergyList))) / N
 
     print('The average error is:', error)
     print('The average energy is:', np.average(np.asarray(EnergyList)))

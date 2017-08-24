@@ -113,4 +113,4 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
         f2 *= 2**(1 - xi)
         featureVector[s + p + 1] = f2
     # Set and return feature vector
-    return featureVector[:2] # REMEMBER TO CHECK IF THIS RETURNS EVERYTHING
+    return featureVector  # [:2]  # REMEMBER TO CHECK IF THIS RETURNS EVERYTHING
