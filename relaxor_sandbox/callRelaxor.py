@@ -11,7 +11,7 @@ eps, r0, sigma = params_file[i_params, :]
 params = (eps, r0, sigma)
 
 # Define boxSize
-boxSize = 2*np.sqrt(N)*r0
+boxSize = 1.5*np.sqrt(N)*r0
 
 # random 2D coordinates
 x = np.random.rand(N, 2) * boxSize
@@ -19,7 +19,6 @@ x = np.random.rand(N, 2) * boxSize
 # Run and time basinhopping
 relax = rlx.relaxor(x, rlx.E_LJ_jac, params, boxSize)
 relax.runRelaxor()
-relax.plotResults()
 xres = np.reshape(relax.res.x, (N, 2))
 
 np.savetxt('output' + str(i_params) + '.dat', xres, delimiter='\t')
