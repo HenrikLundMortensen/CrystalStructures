@@ -76,7 +76,7 @@ def generateData1D(dataSets):
     
     
 if __name__ == '__main__':
-    particles, dataSets = 2, 50000
+    particles, dataSets = 2, 500000
     FeatureVectors, EnergyList = generateData1D(dataSets)
     FeatureVectors = FeatureVectors[:, 0]
     FeatureVectors = FeatureVectors.reshape(-1, 1)
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     FeatureVectors = scaler.transform(FeatureVectors)
     
     # Now create the model
-    myANN = MLPRegressor(hidden_layer_sizes=(30), max_iter=1000, solver='lbfgs', activation='relu', alpha=0.001, learning_rate_init=0.01)
+    myANN = MLPRegressor(hidden_layer_sizes=(30,), max_iter=1000, solver='lbfgs', activation='relu', alpha=0.001, learning_rate_init=0.01)
 
 #    The below can be used to find optimal parameters for the MLPRegressor.
 #    parameters = {'alpha': 10.0 ** -np.arange(1, 7), 'hidden_layer_sizes': [(10, 10, 10), (30,), (5, 5), (3,)], 'solver': ['adam', 'lbfgs'], 'learning_rate_init': [0.001, 0.01, 0.01]}
