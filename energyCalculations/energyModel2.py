@@ -3,6 +3,8 @@ import crystalStructures.featureVector as fv
 import crystalStructures.coordinateSet as cs
 import crystalStructures.energyCalculations.energyLennardJones as elj
 from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler
+import random
 
 
 def generateData(particles, dataSets):
@@ -35,19 +37,75 @@ def generateData(particles, dataSets):
         
     return np.array(featureVectorList), np.asarray(energyList)
 
+
+def generateData1D(dataSets):
+    N = dataSets
+    particles = 2
+    epsilon, r0, sigma = 1.8, 1.1, np.sqrt(0.02)
+    params = [epsilon, r0, sigma]
+    energyCalculator = elj.totalEnergyLJdoubleWell
+
+    energyList = []
+    featureVectorList = []
+    
+    # Create large data set
+    for i in range(N):
+        # Create a new set
+        myCoordinateSet = cs.CoordinateSet()
+        myCoordinateSet.createRandomSet(particles)   # All data sets are two particles
+        myCoordinateSet.Coordinates[0][0] = 0        # seperated further and further away
+        myCoordinateSet.Coordinates[0][1] = 0
+        myCoordinateSet.Coordinates[1][0] = 1 + random.uniform(0, 3)
+        myCoordinateSet.Coordinates[1][1] = 0
+        myCoordinateSet.calculateEnergy(energyCalculator, params)
+        myCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
+
+        # Save energy and feature vectors
+        energyList.append(myCoordinateSet.Energy)
+        tempFeatureList = []
+        for i in range(particles):
+            featureVector = myCoordinateSet.FeatureVectors[i]
+            if i == 0:
+                tempFeatureList = featureVector
+            else:
+                tempFeatureList = np.concatenate((tempFeatureList, featureVector))
+        featureVectorList.append(tempFeatureList)
+        
+    return np.array(featureVectorList), np.asarray(energyList)
+    
     
 if __name__ == '__main__':
-    particles, dataSets = 2, 3
-    FeatureVectors, EnergyList = generateData(particles, dataSets)
+    particles, dataSets = 2, 500000
+    FeatureVectors, EnergyList = generateData1D(dataSets)
 
-    # Preprocess the feature vectors
-    FeatureVectors -= np.mean(FeatureVectors, axis=0)  # Center around zero in each dimension
-    FeatureVectors /= np.std(FeatureVectors, axis=0)   # Normalize so each feature is approximately same order
+    # Preprocess the data
+    scaler = StandardScaler()
+    scaler.fit(FeatureVectors)
+    FeatureVectors = scaler.transform(FeatureVectors)
 
     # Now train the model
-    myANN = MLPRegressor()
+    myANN = MLPRegressor(hidden_layer_sizes=(10,), max_iter=1000, solver='adam', activation='relu', alpha=0.01)
     myANN.fit(FeatureVectors, EnergyList)
 
+    # Check predictions on training data first
+    EnergyListPredict = myANN.predict(FeatureVectors)
+    error = np.sqrt(np.dot(EnergyList - EnergyListPredict, EnergyList - EnergyListPredict)) / dataSets
+    print('Looking at training data')
+    print('Average energy is:', np.average(EnergyList))
+    print('The error is:', error)
+    print('Error relative to average energy is:', error / np.average(EnergyList), '\n')
     
     # Generate some test data
-    dataSets = 10
+    particles, dataSets = 2, 3
+    FeatureVectors, EnergyList = generateData1D(dataSets)
+    
+    # Now preprocess the new feature vectors
+    FeatureVectors = scaler.transform(FeatureVectors)
+    
+    # Predict energy of new data sets
+    EnergyListPredict = myANN.predict(FeatureVectors)
+    error = np.sqrt(np.dot(EnergyList - EnergyListPredict, EnergyList - EnergyListPredict)) / dataSets
+    print('Looking at test data')
+    print('Average energy is:', np.average(EnergyList))
+    print('The error is:', error)
+    print('Error relative to average energy is:', error / np.average(EnergyList))
