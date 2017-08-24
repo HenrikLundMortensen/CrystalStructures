@@ -37,7 +37,7 @@ class CoordinateSet:
         self.Coordinates = [None] * size
         
         for i in range(size):
-            self.Coordinates[i] = np.random.rand(3) * 40
+            self.Coordinates[i] = np.random.rand(3) * 20
             self.Coordinates[i][2] = 1
 
     def calculateEnergy(self, energyCalculator, params):
