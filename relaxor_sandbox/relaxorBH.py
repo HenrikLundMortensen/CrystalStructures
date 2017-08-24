@@ -61,7 +61,7 @@ class takeStep(object):
 
 
 class takeStep2(object):
-    def __init__(self, boxsize, stepsize=0.1):
+    def __init__(self, boxSize, stepsize=0.1):
         self.boxSize = boxSize
         self.stepsize = stepsize
         
@@ -126,7 +126,7 @@ class relaxor:
                                 interval=1,
                                 niter=300,
                                 take_step=myTakeStep,
-                                niter_success=40,
+                                niter_success=10,
                                 minimizer_kwargs=minimizer_kwargs,
                                 callback=print_fun)
         self.runtime = time.time() - t0
@@ -162,15 +162,16 @@ if __name__ == "__main__":
     x1 = np.reshape(x1, (N, 2))
     x2 = np.reshape(x2, (N, 2))
     """
-    
+
+    """
     import matplotlib.pyplot as plt
     plt.figure(1)
     Xbox = [0, boxSize, boxSize, 0, 0]
     Ybox = [0, 0, boxSize, boxSize, 0]
     plt.plot(Xbox, Ybox, color='black')
-
+    
     # Plot atoms
     xres = np.reshape(xres, (N, 2))
     plt.plot(xres[:, 0], xres[:, 1], 'o', color='red', ms=2)
     plt.show()
-    
+    """
