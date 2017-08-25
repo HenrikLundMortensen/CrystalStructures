@@ -31,7 +31,7 @@ class FeatureVectorCalculator:
 
     def __init__(self, func=None):
         self.Coordinates = 0
-        self.Rc = 50  # Perhaps take cutoff radius as parameter?
+        self.Rc = 1.7  # Perhaps take cutoff radius as parameter?
         if func:
             self.calculateSingleFeatureVector = types.MethodType(func, self)
 
@@ -109,7 +109,7 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
                 RjkVec = coordinateSet[k][:2] - coordinateSet[j][:2]
                 Rjk = np.linalg.norm(RjkVec)
 
-                f2 += (1 + lamb * np.cos(np.dot(RijVec, RikVec) / (Rij * Rik)))**xi * np.exp(- eta * (Rij * Rij + Rik * Rik + Rjk * Rjk) / self.Rc**2) * self.cutOffFunction(Rij) * self.cutOffFunction(Rik) * self.cutOffFunction(Rjk)
+                f2 += (1 + lamb * np.dot(RijVec, RikVec) / (Rij * Rik))**xi * np.exp(- eta * (Rij * Rij + Rik * Rik + Rjk * Rjk) / self.Rc**2) * self.cutOffFunction(Rij) * self.cutOffFunction(Rik) * self.cutOffFunction(Rjk)
         f2 *= 2**(1 - xi)
         featureVector[s + p + 1] = f2
     # Set and return feature vector

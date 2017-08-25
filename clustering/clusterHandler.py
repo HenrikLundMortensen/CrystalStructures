@@ -34,7 +34,7 @@ class ClusterHandler:
 
     def doClusteringList(self, featureVectorList):
         if isinstance(featureVectorList[0], int):  # Special for 1d feature vectors
-            self.Kmeans = KMeans(n_clusters=self.K).fit(np.asarray(self.FeatureVectorList).reshape(-1, 1))
+            self.Kmeans = KMeans(n_clusters=self.K).fit(np.asarray(featureVectorList).reshape(-1, 1))
         else:
             self.Kmeans = KMeans(n_clusters=self.K).fit(featureVectorList)
 
