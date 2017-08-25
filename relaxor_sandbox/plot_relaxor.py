@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 N = 100
 params_file = np.loadtxt(fname='params.txt', delimiter='\t')
-for i in range(10):
+for i in range(16):
     eps, r0, sigma = params_file[i, :]
 
     # Define boxSize
@@ -12,7 +12,7 @@ for i in range(10):
     plt.figure(i)
     xload = np.loadtxt(fname='results100/output' + str(i) + '.dat', delimiter='\t')
     Xbox = [0, boxSize, boxSize, 0, 0]
-    Ybox = [0, 0, boxSize, boxSize, 0] 
+    Ybox = [0, 0, boxSize, boxSize, 0]
     plt.plot(Xbox, Ybox, color='black')
 
     # Plot atoms
