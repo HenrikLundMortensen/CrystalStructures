@@ -5,7 +5,6 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def parseData():
     # IF LOCATION OF DATA CHANGES, THIS MUST BE CHANGED
     path = '../grendelResults/335820.in1/'
@@ -39,7 +38,7 @@ def clusterLocalData(dataSets):
         tempCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
         FeatureVectors += tempCoordinateSet.FeatureVectors
     # Then do the clustering
-    K = 4  # Number of clusters
+    K = 5  # Number of clusters
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(FeatureVectors)
 
@@ -47,7 +46,7 @@ def clusterLocalData(dataSets):
 
 
 def clusterGlobalData(globalFeatureVectorList):
-    K = 4
+    K = 3
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(globalFeatureVectorList)
     return myClusterHandler.Kmeans
@@ -65,7 +64,6 @@ if __name__ == '__main__':
     
     dataSets, index, params = parseData()
     KMeans = clusterLocalData(dataSets)
-    
     
     # Calculate a list of global feature vectors
     globalFeatureVectors = []
@@ -89,24 +87,28 @@ if __name__ == '__main__':
         color = int(labels[i])
         plt.plot(r0[i], eps[i], 'o', color='C' + str(color))
     plt.show()
-
+    
+ #   labels = np.random.randint(0, high=3, size=32)
     # Do a plot for each cluster
-    clusters = 4
+    clusters = 3
     maxOfSameType = np.max(np.bincount(labels))
-    maxPlot = 3
-    f, axarr = plt.subplots(maxPlot, clusters)
+    maxPlot = 10
+    fig, axarr = plt.subplots(maxPlot, clusters)
     for j in range(clusters):
         k = 0
         for i in range(len(dataSets)):
             clusterType = labels[i]
-            if k == 3:
+            if k == maxPlot:
                 continue
             if clusterType == j:
                 data = dataSets[i]
                 xData = data[:, 0]
                 yData = data[:, 1]
                 axarr[k, j].plot(xData, yData, 'o')
+                axarr[k, j].set_xlim([0, 20])
+                axarr[k, j].set_ylim([0, 20])
                 axarr[k, j].set_xticks([])
                 axarr[k, j].set_yticks([])
                 k += 1
     plt.show()
+
