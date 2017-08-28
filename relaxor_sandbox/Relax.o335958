@@ -1,0 +1,39 @@
+
+
+Usage statistics:
+Command:  dispatch -T 1 -e ssh -SS -c 'python localMinimizer.py' 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
+Nodename         Tasks   AccWalltime
+s19n18               8        408016
+s19n19               8        395190
+s19n20               8        398668
+Total number of tasks run:       24
+Number of nodes/cpus:            3/24
+Total AccWalltime for all tasks: 1201874
+Total walltime for the job:      53982
+P-factor:                        22.3
+
+Nodename  TaskID  Wallt[s]  Command
+s19n18        0      51720  python localMinimizer.py 0
+s19n19        1      46790  python localMinimizer.py 1
+s19n20        2      48304  python localMinimizer.py 2
+s19n18        3      52281  python localMinimizer.py 3
+s19n19        4      48881  python localMinimizer.py 4
+s19n20        5      49968  python localMinimizer.py 5
+s19n18        6      51849  python localMinimizer.py 6
+s19n19        7      48739  python localMinimizer.py 7
+s19n20        8      51757  python localMinimizer.py 8
+s19n18        9      49361  python localMinimizer.py 9
+s19n19       10      50037  python localMinimizer.py 10
+s19n20       11      51095  python localMinimizer.py 11
+s19n18       12      49398  python localMinimizer.py 12
+s19n19       13      52607  python localMinimizer.py 13
+s19n20       14      46920  python localMinimizer.py 14
+s19n18       15      53980  python localMinimizer.py 15
+s19n19       16      48940  python localMinimizer.py 16
+s19n20       17      48053  python localMinimizer.py 17
+s19n18       18      49266  python localMinimizer.py 18
+s19n19       19      47847  python localMinimizer.py 19
+s19n20       20      50272  python localMinimizer.py 20
+s19n18       21      50161  python localMinimizer.py 21
+s19n19       22      51349  python localMinimizer.py 22
+s19n20       23      52299  python localMinimizer.py 23
