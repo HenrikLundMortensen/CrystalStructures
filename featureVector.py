@@ -75,7 +75,7 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
         if s == 1:
             eta, Rs = 0.001, 0
         if s == 2:
-            eta, Rs = 80, 2
+            eta, Rs = 0.001, 2
         f1 = 0
         for j in range(dataSize):     # Calculate radial part
             if j == i:
@@ -83,16 +83,16 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
             x, y = coordinateSet[j][:2]
             Rij = np.sqrt((x0 - x)**2 + (y0 - y)**2)
             if Rij <= self.Rc:
-                f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc * self.Rc) * self.cutOffFunction(Rij)
+                f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc**2) * self.cutOffFunction(Rij)
                 #f1 = Rij  # Test for two atoms
         featureVector[s] = f1
-    xi, lamb, eta = 2, 1, 1    # Guess some parameters for angular part
+    xi, lamb, eta = 0, 1, 1    # Guess some parameters for angular part
     f2 = 0                     # Calculate angular part
     for p in range(3):
         if p == 1:
-            xi, lamb, eta = 1, -1, 2
+            xi, lamb, eta = 0, -1, 2
         if p == 2:
-            xi, lamb, eta = 4, 1, 80
+            xi, lamb, eta = 0, 1, 80
         for j in range(dataSize):
             if j == i:
                 continue

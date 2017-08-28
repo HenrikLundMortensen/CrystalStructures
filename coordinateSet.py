@@ -66,6 +66,7 @@ if __name__ == '__main__':
     myCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
     print('Feature vectors are:', myCoordinateSet.FeatureVectors)
 
+    
     # Calculate energy
     import crystalStructures.energyCalculations.energyLennardJones as elj
     epsilon, r0, sigma = 1.8, 1.1, np.sqrt(0.02)
