@@ -39,7 +39,7 @@ def clusterLocalData(dataSets):
         tempCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
         FeatureVectors += tempCoordinateSet.FeatureVectors
     # Then do the clustering
-    K = 7  # Number of clusters
+    K = 4  # Number of clusters
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(FeatureVectors)
 
@@ -47,7 +47,7 @@ def clusterLocalData(dataSets):
 
 
 def clusterGlobalData(globalFeatureVectorList):
-    K = 5
+    K = 4
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(globalFeatureVectorList)
     return myClusterHandler.Kmeans
@@ -62,9 +62,11 @@ def predictLocalCluster(dataSet, KMeans):
 
 
 if __name__ == '__main__':
+    
     dataSets, index, params = parseData()
     KMeans = clusterLocalData(dataSets)
-
+    
+    
     # Calculate a list of global feature vectors
     globalFeatureVectors = []
     for i in range(len(dataSets)):
@@ -86,4 +88,25 @@ if __name__ == '__main__':
     for i in range(len(dataSets)):
         color = int(labels[i])
         plt.plot(r0[i], eps[i], 'o', color='C' + str(color))
+    plt.show()
+
+    # Do a plot for each cluster
+    clusters = 4
+    maxOfSameType = np.max(np.bincount(labels))
+    maxPlot = 3
+    f, axarr = plt.subplots(maxPlot, clusters)
+    for j in range(clusters):
+        k = 0
+        for i in range(len(dataSets)):
+            clusterType = labels[i]
+            if k == 3:
+                continue
+            if clusterType == j:
+                data = dataSets[i]
+                xData = data[:, 0]
+                yData = data[:, 1]
+                axarr[k, j].plot(xData, yData, 'o')
+                axarr[k, j].set_xticks([])
+                axarr[k, j].set_yticks([])
+                k += 1
     plt.show()
