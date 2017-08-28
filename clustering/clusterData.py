@@ -73,13 +73,13 @@ def plotPhases(dataSets, labels, params):
     for i in range(len(dataSets)):
         color = int(labels[i])
         plt.plot(r0[i], eps[i], 'o', color='C' + str(color))
-    plt.show()
+    plt.savefig('phases.png')
 
 
 def plotClusters(dataSets, labels):
     clusters = np.amax(labels) + 1
-    maxPlot = 4  # Maximum number of plots in each cluster
-    fig, axarr = plt.subplots(maxPlot, clusters)
+    maxPlot = 8  # Maximum number of plots in each cluster
+    fig, axarr = plt.subplots(maxPlot, clusters, figsize=(30, 30))
     for j in range(clusters):
         k = 0
         for i in range(len(dataSets)):
@@ -96,12 +96,13 @@ def plotClusters(dataSets, labels):
                 axarr[k, j].set_xticks([])
                 axarr[k, j].set_yticks([])
                 k += 1
-    plt.show()
+    plt.savefig('clusters.png')
 
 
 if __name__ == '__main__':
     
     dataSets, index, params = parseData()
+
     KMeans = clusterLocalData(dataSets)
     
     # Calculate a list of global feature vectors
