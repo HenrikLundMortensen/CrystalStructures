@@ -83,7 +83,7 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
             x, y = coordinateSet[j][:2]
             Rij = np.sqrt((x0 - x)**2 + (y0 - y)**2)
             if Rij <= self.Rc:
-                f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc * self.Rc) * self.cutOffFunction(Rij)
+                f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc**2) * self.cutOffFunction(Rij)
                 #f1 = Rij  # Test for two atoms
         featureVector[s] = f1
     xi, lamb, eta = 2, 1, 1    # Guess some parameters for angular part
