@@ -1,0 +1,208 @@
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: divide by zero encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:31: RuntimeWarning: invalid value encountered in double_scalars
+  E1 = 1/r**12 - 2/r**6
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: divide by zero encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:38: RuntimeWarning: invalid value encountered in double_scalars
+  dEx1 = 12*dxij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:39: RuntimeWarning: invalid value encountered in double_scalars
+  dEx2 = eps*(r-r0)*dxij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: divide by zero encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:41: RuntimeWarning: invalid value encountered in double_scalars
+  dEy1 = 12*dyij*(-1 / r**14 + 1 / r**8)
+/scratch/335958.in1/relaxorBH.py:42: RuntimeWarning: invalid value encountered in double_scalars
+  dEy2 = eps*(r-r0)*dyij / (r*sigma**2) * np.exp(-(r - r0)**2 / (2*sigma**2))
