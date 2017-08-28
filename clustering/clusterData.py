@@ -5,6 +5,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def parseData():
     # IF LOCATION OF DATA CHANGES, THIS MUST BE CHANGED
     path = '../grendelResults/335820.in1/'
@@ -60,21 +61,7 @@ def predictLocalCluster(dataSet, KMeans):
     return coordinateSet.Clusters
 
 
-if __name__ == '__main__':
-    
-    dataSets, index, params = parseData()
-    KMeans = clusterLocalData(dataSets)
-    
-    # Calculate a list of global feature vectors
-    globalFeatureVectors = []
-    for i in range(len(dataSets)):
-        clusters = predictLocalCluster(dataSets[i], KMeans)
-        globalFeatureVectors.append(clusters)
-
-    # Cluster the global feature vectors
-    globalKMeans = clusterGlobalData(globalFeatureVectors)
-    labels = globalKMeans.labels_
-
+def plotPhases(dataSets, labels, params):
     # Find parameters for each grid
     r0 = np.zeros(len(dataSets))
     eps = np.zeros(len(dataSets))
@@ -87,12 +74,11 @@ if __name__ == '__main__':
         color = int(labels[i])
         plt.plot(r0[i], eps[i], 'o', color='C' + str(color))
     plt.show()
-    
- #   labels = np.random.randint(0, high=3, size=32)
-    # Do a plot for each cluster
-    clusters = 3
-    maxOfSameType = np.max(np.bincount(labels))
-    maxPlot = 10
+
+
+def plotClusters(dataSets, labels):
+    clusters = np.amax(labels) + 1
+    maxPlot = 4  # Maximum number of plots in each cluster
     fig, axarr = plt.subplots(maxPlot, clusters)
     for j in range(clusters):
         k = 0
@@ -111,4 +97,29 @@ if __name__ == '__main__':
                 axarr[k, j].set_yticks([])
                 k += 1
     plt.show()
+
+
+if __name__ == '__main__':
+    
+    dataSets, index, params = parseData()
+    KMeans = clusterLocalData(dataSets)
+    
+    # Calculate a list of global feature vectors
+    globalFeatureVectors = []
+    for i in range(len(dataSets)):
+        clusters = predictLocalCluster(dataSets[i], KMeans)
+        globalFeatureVectors.append(clusters)
+
+    # Cluster the global feature vectors
+    globalKMeans = clusterGlobalData(globalFeatureVectors)
+    labels = globalKMeans.labels_
+    print(labels)  # For Grendel
+
+    # Plot the phase diagram
+    plotPhases(dataSets, labels, params)
+
+    # Plot the clusters
+    plotClusters(dataSets, labels)
+    
+
 
