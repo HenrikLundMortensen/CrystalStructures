@@ -39,7 +39,7 @@ def clusterLocalData(dataSets):
         tempCoordinateSet.calculateFeatures(fv.calculateFeatureVectorGaussian)
         FeatureVectors += tempCoordinateSet.FeatureVectors
     # Then do the clustering
-    K = 4  # Number of clusters
+    K = 5  # Number of clusters
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(FeatureVectors)
 
@@ -47,7 +47,7 @@ def clusterLocalData(dataSets):
 
 
 def clusterGlobalData(globalFeatureVectorList):
-    K = 4
+    K = 3
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(globalFeatureVectorList)
     return myClusterHandler.Kmeans
@@ -61,22 +61,7 @@ def predictLocalCluster(dataSet, KMeans):
     return coordinateSet.Clusters
 
 
-if __name__ == '__main__':
-    
-    dataSets, index, params = parseData()
-    KMeans = clusterLocalData(dataSets)
-    
-    
-    # Calculate a list of global feature vectors
-    globalFeatureVectors = []
-    for i in range(len(dataSets)):
-        clusters = predictLocalCluster(dataSets[i], KMeans)
-        globalFeatureVectors.append(clusters)
-
-    # Cluster the global feature vectors
-    globalKMeans = clusterGlobalData(globalFeatureVectors)
-    labels = globalKMeans.labels_
-
+def plotPhases(dataSets, labels, params):
     # Find parameters for each grid
     r0 = np.zeros(len(dataSets))
     eps = np.zeros(len(dataSets))
@@ -88,25 +73,54 @@ if __name__ == '__main__':
     for i in range(len(dataSets)):
         color = int(labels[i])
         plt.plot(r0[i], eps[i], 'o', color='C' + str(color))
-    plt.show()
+    plt.savefig('phases.png')
 
-    # Do a plot for each cluster
-    clusters = 4
-    maxOfSameType = np.max(np.bincount(labels))
-    maxPlot = 3
-    f, axarr = plt.subplots(maxPlot, clusters)
+
+def plotClusters(dataSets, labels):
+    clusters = np.amax(labels) + 1
+    maxPlot = 8  # Maximum number of plots in each cluster
+    fig, axarr = plt.subplots(maxPlot, clusters, figsize=(30, 30))
     for j in range(clusters):
         k = 0
         for i in range(len(dataSets)):
             clusterType = labels[i]
-            if k == 3:
+            if k == maxPlot:
                 continue
             if clusterType == j:
                 data = dataSets[i]
                 xData = data[:, 0]
                 yData = data[:, 1]
                 axarr[k, j].plot(xData, yData, 'o')
+                axarr[k, j].set_xlim([0, 20])
+                axarr[k, j].set_ylim([0, 20])
                 axarr[k, j].set_xticks([])
                 axarr[k, j].set_yticks([])
                 k += 1
-    plt.show()
+    plt.savefig('clusters.png')
+
+
+if __name__ == '__main__':
+    
+    dataSets, index, params = parseData()
+
+    KMeans = clusterLocalData(dataSets)
+    
+    # Calculate a list of global feature vectors
+    globalFeatureVectors = []
+    for i in range(len(dataSets)):
+        clusters = predictLocalCluster(dataSets[i], KMeans)
+        globalFeatureVectors.append(clusters)
+
+    # Cluster the global feature vectors
+    globalKMeans = clusterGlobalData(globalFeatureVectors)
+    labels = globalKMeans.labels_
+    print(labels)  # For Grendel
+
+    # Plot the phase diagram
+    plotPhases(dataSets, labels, params)
+
+    # Plot the clusters
+    plotClusters(dataSets, labels)
+    
+
+
