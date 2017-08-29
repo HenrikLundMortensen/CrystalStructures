@@ -47,7 +47,7 @@ def clusterLocalData(dataSets):
 
 
 def clusterGlobalData(globalFeatureVectorList):
-    K = 3
+    K = 5
     myClusterHandler = ch.ClusterHandler(K)
     myClusterHandler.doClusteringList(globalFeatureVectorList)
     return myClusterHandler.Kmeans
@@ -78,7 +78,7 @@ def plotPhases(dataSets, labels, params):
 
 def plotClusters(dataSets, labels):
     clusters = np.amax(labels) + 1
-    maxPlot = 8  # Maximum number of plots in each cluster
+    maxPlot = clusters  # Maximum number of plots in each cluster
     fig, axarr = plt.subplots(maxPlot, clusters, figsize=(30, 30))
     for j in range(clusters):
         k = 0
