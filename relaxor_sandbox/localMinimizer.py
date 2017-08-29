@@ -4,12 +4,7 @@ from relaxorBH import E_LJ_jac
 import sys
 
 
-def stretch(x):
-    N = np.size(x, 0)
-    return np.reshape(x, 2*N)
-
-
-N = 100
+N = 30  # Number of atoms
 params = (1, 1.4, np.sqrt(0.02))
 boxsize = 1.5*np.sqrt(N)
 
