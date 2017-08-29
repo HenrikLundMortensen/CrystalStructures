@@ -1,0 +1,37 @@
+[[  5.07076716   5.05246261   1.        ]
+ [  6.07132481   5.02157186   1.        ]
+ [  7.05155035   5.05849436   1.        ]
+ [  8.05901633   5.06878975   1.        ]
+ [  9.09139428   5.07070413   1.        ]
+ [ 10.02801489   5.097448     1.        ]
+ [ 11.08361169   5.0143285    1.        ]
+ [ 12.04331286   5.06643976   1.        ]
+ [ 13.07176401   5.03082748   1.        ]
+ [ 14.03207045   5.00169347   1.        ]]
+Running basin hopping with paramerters:
+PARAMETERS BEGIN
+
+epsilon=4.700000
+r0=2.060000
+sigma=0.141421
+PARAMETERS END
+
+
+E: -38.8153 accepted 1
+E: -46.4943 accepted 1
+E: -51.3665 accepted 1
+E: -52.0831 accepted 1
+E: -60.4887 accepted 1
+E: -56.7924 accepted 0
+E: -57.5823 accepted 0
+E: -48.5015 accepted 0
+E: -67.9883 accepted 1
+E: -54.8398 accepted 0
+E: -64.2166 accepted 0
+E: -54.9610 accepted 0
+E: -50.1331 accepted 0
+E: -55.6329 accepted 0
+E: -54.4098 accepted 0
+Runtime = 9.229806
+
+
