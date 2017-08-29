@@ -31,7 +31,7 @@ class FeatureVectorCalculator:
 
     def __init__(self, func=None):
         self.Coordinates = 0
-        self.Rc = 1.7  # Perhaps take cutoff radius as parameter?
+        self.Rc = 8  # Perhaps take cutoff radius as parameter?
         if func:
             self.calculateSingleFeatureVector = types.MethodType(func, self)
 
@@ -86,13 +86,13 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
                 f1 += np.exp(- eta * (Rij - Rs)**2 / self.Rc**2) * self.cutOffFunction(Rij)
                 #f1 = Rij  # Test for two atoms
         featureVector[s] = f1
-    xi, lamb, eta = 0, 1, 1    # Guess some parameters for angular part
-    f2 = 0                     # Calculate angular part
+    xi, lamb, eta = 2, 1, 0.005    # Guess some parameters for angular part
+    f2 = 0                         # Calculate angular part
     for p in range(3):
         if p == 1:
-            xi, lamb, eta = 0, -1, 2
+            xi, lamb, eta = 0, -1, 0.005
         if p == 2:
-            xi, lamb, eta = 0, 1, 80
+            xi, lamb, eta = 0, 1, 0.005
         for j in range(dataSize):
             if j == i:
                 continue
@@ -113,4 +113,4 @@ def calculateFeatureVectorGaussian(self, coordinateSet, i):
         f2 *= 2**(1 - xi)
         featureVector[s + p + 1] = f2
     # Set and return feature vector
-    return featureVector  # [:2]  # REMEMBER TO CHECK IF THIS RETURNS EVERYTHING
+    return featureVector

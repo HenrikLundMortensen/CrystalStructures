@@ -1,7 +1,4 @@
 import numpy as np
-from matplotlib import pyplot as plt
-
-
 
 
 def dist(coord1, coord2):
@@ -55,7 +52,7 @@ def totalEnergyLJdoubleWell(coords,params):
 
 
 if __name__ == '__main__':
-    
+    from matplotlib import pyplot as plt
     a = 0
     params = [1.8, 1.1, np.sqrt(0.02)]
 
