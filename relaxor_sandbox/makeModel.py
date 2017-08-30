@@ -33,8 +33,8 @@ def loaddata(Ndata, Natoms, Ndim):
 def loaddatafile(Ndata, Natoms, Ndim, i_file):
     
     # Load data from datafile number k
-    X = np.loadtxt(fname='data30/positions' + str(i_file) + '.dat', delimiter='\t')
-    E = np.loadtxt(fname='data30/energies' + str(i_file) + '.dat', delimiter='\t')
+    X = np.loadtxt(fname='data50/positions' + str(i_file) + '.dat', delimiter='\t')
+    E = np.loadtxt(fname='data50/energies' + str(i_file) + '.dat', delimiter='\t')
 
     X = blockshaped(X, Natoms, Ndim)
     return X, E
@@ -122,7 +122,7 @@ def unblockshaped(arr, h, w):
 if __name__ == "__main__":
     
     Ndata = 100
-    Natoms = 30
+    Natoms = 50
     Ndim = 2
 
     X, E = loaddatafile(Ndata, Natoms, Ndim, sys.argv[1])
