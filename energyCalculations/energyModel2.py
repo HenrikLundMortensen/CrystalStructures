@@ -82,22 +82,22 @@ def generateData1D(dataSets):
     
     
 if __name__ == '__main__':
-    particles, dataSets = 3, 100000
+    particles, dataSets = 3, 10
     FeatureVectors, EnergyList = generateData(particles, dataSets)
-
+    print(FeatureVectors)
     # Preprocess the data
     scaler = StandardScaler()
     scaler.fit(FeatureVectors)
     FeatureVectors = scaler.transform(FeatureVectors)
     
     # Now create the model
-    myANN = MLPRegressor(hidden_layer_sizes=(5, 5), max_iter=1000, solver='lbfgs', activation='relu', alpha=0.00001, learning_rate_init=0.01)
+#    myANN = MLPRegressor(hidden_layer_sizes=(5, 5), max_iter=1000, solver='lbfgs', activation='relu', alpha=0.00001, learning_rate_init=0.01)
 
 #    The below can be used to find optimal parameters for the MLPRegressor.
-    parameters = {'alpha': 10.0 ** -np.arange(1, 7), 'hidden_layer_sizes': [(10, 10, 10), (30,), (5, 5), (3,)], 'solver': ['adam', 'lbfgs'], 'learning_rate_init': [0.001, 0.01, 0.0001]}
-    gscv = ms.GridSearchCV(myANN, param_grid=parameters)
-    gscv.fit(FeatureVectors, EnergyList)
-    print('Best parameters are:', gscv.best_params_)
+#    parameters = {'alpha': 10.0 ** -np.arange(1, 7), 'hidden_layer_sizes': [(10, 10, 10), (30,), (5, 5), (3,)], 'solver': ['adam', 'lbfgs'], 'learning_rate_init': [0.001, 0.01, 0.0001]}
+#    gscv = ms.GridSearchCV(myANN, param_grid=parameters)
+#    gscv.fit(FeatureVectors, EnergyList)
+#    print('Best parameters are:', gscv.best_params_)
 
     '''
     # Train the model
