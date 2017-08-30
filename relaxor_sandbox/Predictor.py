@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.model_selection import cross_val_score
 from sklearn.cluster import KMeans
 from sklearn.base import BaseEstimator
+from sklearn.metrics import explained_variance_score
 import time
 
 
@@ -46,6 +47,7 @@ class Regressor(BaseEstimator):
     def score(self, Xtest, Etest):
         Ntest = np.size(Etest, 0)
         Epredict = self.predict(Xtest)
+        # return explained_variance_score(Etest, Epredict, multioutput='uniform_average')
         return 1/Ntest * np.dot(Etest - Epredict, Etest - Epredict)
 
     
@@ -82,23 +84,30 @@ if __name__ == '__main__':
 
     Npoints = 20  # Points on learning curve
     Ndata_array = np.logspace(1, 3, Npoints).astype(int)
+    Nrepetitions = 5
+    Ncluster_array = np.array([30,50,100,150]).astype(int)
+    Nc_rep = Ncluster_array.shape[0] # Number of differentclusters tried
+    error_array = np.zeros((Npoints, Nrepetitions*Nc_rep))
 
-    error_array = np.zeros(Npoints)
-    for i in range(Npoints):
-        Ndata = Ndata_array[i]
-        X, E = loaddata(Ndata, Natoms, Nfeatures)
-        reg = Regressor(Nk=50)
-
-        t0 = time.time()
-        error = cross_val_score(reg,
-                                X,
-                                E,
-                                fit_params={'Nk': 50},
-                                cv=3)
-
-        error_array[i] = np.mean(error)
-        print("Runtime:", time.time() - t0)
-        print("error:", error)
+    for m in range(Nc_rep):
+        Ncluster = int(Ncluster_array[m])
+        for l in range(Nrepetitions):
+            for i in range(Npoints):
+                Ndata = Ndata_array[i]
+                X, E = loaddata(Ndata, Natoms, Nfeatures)
+                reg = Regressor(Nk=Ncluster)
+                
+                t0 = time.time()
+                error = cross_val_score(reg,
+                                        X,
+                                        E,
+                                        fit_params={'Nk': Ncluster},
+                                        cv=5)
+                
+                error_array[i, m*l + l] = np.mean(error)
+                print("Runtime:", time.time() - t0)
+                print("error:", error)
 
 LC = np.c_[Ndata_array, error_array]
-np.savetxt('LCdata_30atoms_3CV_50Nk.dat', LC, delimiter='\t')
+np.savetxt('LCn_30atoms_3CV_50Nk.dat', Ndata_array, delimiter='\t')
+np.savetxt('LCerror_30atoms_3CV_50Nk.dat', error_array, delimiter='\t')

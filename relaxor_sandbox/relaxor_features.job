@@ -16,7 +16,7 @@
 #  directory on each node. One set of files per executionnode!
 #  pbsdsh-flags: -s : one node at a time; -u : once on each node 
 pbsdsh -s -u cp $PBS_O_WORKDIR/makeModel.py  /scratch/$PBS_JOBID
-pbsdsh -s -u cp -r $PBS_O_WORKDIR/data30  /scratch/$PBS_JOBID
+pbsdsh -s -u cp -r $PBS_O_WORKDIR/data50  /scratch/$PBS_JOBID
 
 # Set up runtime environment
 cd $PBS_O_WORKDIR
@@ -32,4 +32,4 @@ cd /scratch/$PBS_JOBID
 #  {0..9} : Specify arguments for the 9 subtasks: 0,...,9
 dispatch -T 1 -e ssh -SS -c "python makeModel.py" {0..23}
 
-pbsdsh -s -u bash -c 'cp -r /scratch/$PBS_JOBID/*.dat  $PBS_O_WORKDIR/data30/'
+pbsdsh -s -u bash -c 'cp -r /scratch/$PBS_JOBID/*.dat  $PBS_O_WORKDIR/data50/'
